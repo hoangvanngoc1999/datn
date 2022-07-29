@@ -8,20 +8,29 @@ class Cart
 
     public function add($product, $quantity = 1)
     {
-        $carts = $this -> getCart(); // lấy dữ liệu
-        if(isset($carts[$product->id])){
-            $carts[$product->id]->quantity += $quantity;
-        }else{
-            $item = [
-                'id' => $product->id,
-                'name' => $product->name,
-                'image' => $product->image,
-                'price' => $product->sale_price > 0 ? $product->sale_price : $product->price,
-                'quantity' => $quantity
-            ];
-            $carts[$product->id] = (object)$item;
+        if ($product->qty == 0) {
+            return false;
+        } else {
+            $carts = $this -> getCart(); // lấy dữ liệu
+            if(isset($carts[$product->id])){
+                if($carts[$product->id]->quantity + 1 >  $product->qty) {
+                    return false;
+                }
+                $carts[$product->id]->quantity += $quantity;
+            }else{
+                $item = [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'image' => $product->image,
+                    'price' => $product->sale_price > 0 ? $product->sale_price : $product->price,
+                    'entry_price' => $product->entry_price,
+                    'quantity' => $quantity
+                ];
+                $carts[$product->id] = (object)$item;
+            }
+            session(['cart' => $carts]); // cách lưu
+            return true;
         }
-        session(['cart' => $carts]); // cách lưu
     }
 
     public function update($id, $quantity = 1)
@@ -70,4 +79,3 @@ class Cart
         return $total;
     }
 }
-?>

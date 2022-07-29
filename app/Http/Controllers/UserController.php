@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -40,7 +40,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role' => $request->status
+        ];
+        if(User::create($data)){
+            return redirect()->route('user.index')->with('success','Thêm mới sản phẩm thành công');
+        }
     }
 
     /**
@@ -89,9 +99,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('user.index')->with('success','Xóa thông tin thành công');
     }
 
     public function changepasswordform()

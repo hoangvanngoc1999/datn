@@ -1,9 +1,10 @@
 @extends('layout.fe')
 @section('main')
+<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
 
 <section id="advertisement">
     <div class="container">
-        <img src="{{url('public/fe')}}/images/shop/advertisement.jpg" alt="" />
+        <img src="{{url('/fe')}}/images/shop/advertisement.jpg" alt="" />
     </div>
 </section>
 
@@ -152,7 +153,7 @@
 
                     <div class="shipping text-center">
                         <!--shipping-->
-                        <img src="{{url('public/fe')}}/images/home/shipping.jpg" alt="" />
+                        <img src="{{url('/fe')}}/images/home/shipping.jpg" alt="" />
                     </div>
                     <!--/shipping-->
 
@@ -167,25 +168,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/shop/product12.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/shop/product12.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -194,25 +195,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/shop/product11.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/shop/product11.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -221,25 +222,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/shop/product10.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/shop/product10.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -248,26 +249,26 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/shop/product9.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/shop/product9.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
-                                <img src="{{url('public/fe')}}/images/home/new.png" class="new" alt="" />
+                                <img src="{{url('/fe')}}/images/home/new.png" class="new" alt="" />
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -276,26 +277,26 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/shop/product8.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/shop/product8.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
-                                <img src="{{url('public/fe')}}/images/home/sale.png" class="new" alt="" />
+                                <img src="{{url('/fe')}}/images/home/sale.png" class="new" alt="" />
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -304,53 +305,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/shop/product7.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/shop/product7.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/home/product6.jpg" alt="" />
-                                    <h2>$56</h2>
-                                    <p>Easy Polo Black Edition</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -360,25 +333,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/home/product5.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/home/product6.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -388,25 +361,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/home/product4.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/home/product5.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -416,25 +389,53 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/home/product3.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/home/product4.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img src="{{url('/fe')}}/images/home/product3.jpg" alt="" />
+                                    <h2>$56</h2>
+                                    <p>Easy Polo Black Edition</p>
+                                    <a href="#" class="btn btn-default add-to-cart"><i
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                </div>
+                                <div class="product-overlay">
+                                    <div class="overlay-content">
+                                        <h2>$56</h2>
+                                        <p>Easy Polo Black Edition</p>
+                                        <a href="#" class="btn btn-default add-to-cart"><i
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="choose">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -445,25 +446,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/home/product2.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/home/product2.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -473,25 +474,25 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="{{url('public/fe')}}/images/home/product1.jpg" alt="" />
+                                    <img src="{{url('/fe')}}/images/home/product1.jpg" alt="" />
                                     <h2>$56</h2>
                                     <p>Easy Polo Black Edition</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i
-                                            class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product-overlay">
                                     <div class="overlay-content">
                                         <h2>$56</h2>
                                         <p>Easy Polo Black Edition</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i
-                                                class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào ưu thích</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Thêm vào so sánh</a></li>
                                 </ul>
                             </div>
                         </div>

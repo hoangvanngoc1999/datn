@@ -48,7 +48,7 @@
                         <a href="" class="btn btn-sm btn-success">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="" class="btn btn-sm btn-danger btndelete">
+                        <a href="{{route('user.destroy', $item->id)}}" class="btn btn-sm btn-danger btndelete">
                             <i class="fas fa-trash"></i>
                         </a>
                     </td>
@@ -69,3 +69,20 @@
     {{$data->appends(request()->all())->links()}}
 </div>
 @stop()
+@section('js')
+
+<script>
+$('.btndelete').click(function(ev) {
+    ev.preventDefault();
+    var _herf = $(this).attr('href');
+    $('form#form-delete').attr('action', _herf);
+    if (confirm('Bạn có chắc chắn muốn xóa không ?')) {
+        $('form#form-delete').submit();
+    }
+
+
+
+});
+</script>
+
+@endsection

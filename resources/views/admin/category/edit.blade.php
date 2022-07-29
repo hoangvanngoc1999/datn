@@ -6,29 +6,29 @@
     @csrf @method('PUT')
     <input type="hidden" id="" value="{{$category->id}}">
     <div class="form-group">
-        <label for="">Name</label>
+        <label for="">Tên danh mục</label>
         <input type="text" value="{{$category->name}}" class="form-control" name="name" placeholder="Input field">
         @error('name')
         <small class="help-block">{{$message}}</small>
         @enderror
     </div>
     <div class="form-group">
-        <label for="">Status</label>
+        <label for="">Trạng thái</label>
 
         <div class="radio">
             <label>
                 <input type="radio" name="status" value="1" checked>
-                Public
+                Hiện
             </label>
             <label>
                 <input type="radio" name="status" value="0">
-                Private
+                Ẩn
             </label>
         </div>
 
 
     </div>
-    <button type="submit" class="btn btn-primary">Save data</button>
+    <button type="submit" class="btn btn-primary">Lưu danh mục</button>
 </form>
 
 @endsection

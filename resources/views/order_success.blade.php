@@ -1,13 +1,13 @@
 @extends('layout.fe')
 @section('main')
+<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
 <div class="jumbotron">
     <div class="container">
-        <h1>Đặt hàng thành công</h1>
-        <p>Vui lòng kiểm tra hộp thư của mail và xác nhận đơn hàng. Hệ thống sẽ tự hủy đơn hàng nếu trong vòng 24h bạn
-            không xác nhận đơn hàng này </p>
+        <h1>{{$lang['status']['status1']}}</h1>
+        <p>{{$lang['status']['status2']}}</p>
         <p>
             <a href="https://mail.google.com/" class="btn btn-success" target="_blank"><i
-                    class="fa fa-google-plus"></i>Mở email của bạn</a>
+                    class="fa fa-google-plus"></i>{{$lang['status']['status3']}}</a>
         </p>
     </div>
 </div>

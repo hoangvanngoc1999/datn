@@ -7,31 +7,31 @@ return [
         'icon' => 'fa-home'
     ],
     [
-        'label' => 'Category Manager',
+        'label' => 'Quản lí danh mục',
         'route' => 'category.index',
         'icon' => 'fa-shopping-cart',
         'items' => [
             [
-                'label' => 'List category',
+                'label' => 'Danh sách danh mục',
                 'route' => 'category.index',
             ],
             [
-                'label' => 'Add category',
+                'label' => 'Thêm danh mục',
                 'route' => 'category.create',
             ]
         ]
     ],
     [
-        'label' => 'Product Manager',
+        'label' => 'Quản lí sản phẩm',
         'route' => 'product.index',
         'icon' => 'fa-shopping-cart',
         'items' => [
             [
-                'label' => 'List product',
+                'label' => 'Danh sách sản phẩm',
                 'route' => 'product.index',
             ],
             [
-                'label' => 'Add product',
+                'label' => 'Thêm sản phẩm',
                 'route' => 'product.create',
             ]
         ]
@@ -49,38 +49,38 @@ return [
     // ],
    
     [
-        'label' => 'Order Manager',
+        'label' => 'Quản lí hoá đơn',
         'route' => 'order.index',
         'icon' => 'fa-shopping-cart',
         'items' => [
             [
-                'label' => 'List Order',
+                'label' => 'Danh sách hoá đơn',
                 'route' => 'order.index',
             ]
         ]
     ],
     [
-        'label' => 'Guest Manager',
+        'label' => 'Quản lí khách hàng',
         'route' => 'guest.index',
         'icon' => 'fa-user',
         'items' => [
             [
-                'label' => 'List account',
+                'label' => 'Danh sách khách hàng',
                 'route' => 'guest.index',
             ]
         ]
     ],
     [
-        'label' => 'User Manager',
+        'label' => 'Quản lí admin',
         'route' => 'user.index',
         'icon' => 'fa-user',
         'items' => [
             [
-                'label' => 'List user',
+                'label' => 'Danh sách admin',
                 'route' => 'user.index',
             ],
             [
-                'label' => 'Add user',
+                'label' => 'Thêm admin',
                 'route' => 'user.create',
             ]
             

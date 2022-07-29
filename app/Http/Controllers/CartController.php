@@ -13,13 +13,19 @@ class CartController extends Controller
      *
      * @param Product $product
      * @param Cart $cart
-     * @return void
+     * @return boolean
      */
     public function add(Product $product, Cart $cart)
     {
-        $cart-> add($product);
         
-        return redirect()->route('cart.view');
+        $result = $cart-> add($product);
+       
+        if($result == true) {
+            return redirect()->route('cart.view')->with('success','Thêm sản phẩm thành công vào giỏ hàng');
+        } else {
+            return redirect()->route('cart.view')->with('error','Thêm sản phẩm thất bại.');;
+        }
+        
     }
 
     /**
@@ -33,6 +39,10 @@ class CartController extends Controller
 
     public function update($id, Cart $cart, Request $request)
     {
+        $quantityPrd = Product::find($id)['qty'];
+        if($request->quantity > $quantityPrd) {
+            return redirect()->route('cart.view')->with('error','Cập nhật giỏ hàng thất bại. Chỉ còn '.$quantityPrd. ' sản phẩm trong kho');
+        }
         $quantity = ($request->quantity && $request->quantity) > 0 ? floor($request->quantity) : 1;
         $cart->update($id, $quantity);
         return redirect()->route('cart.view')->with('success','Cập nhật giỏ hàng thành công');

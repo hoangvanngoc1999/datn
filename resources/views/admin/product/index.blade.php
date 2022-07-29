@@ -17,6 +17,20 @@
             <option value="{{$cat->id}}" {{$selected}}>{{$cat->name}}</option>
             @endforeach
         </select>
+        <div class="form-group">
+            <select name="price" class="form-control">
+                <option value="">Sắp xếp</option>
+                <option value="price-ASC">Price +</option>
+                <option value="price-DESC">Price -</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select name="name" class="form-control">
+                <option value="">Sắp xếp</option>
+                <option value="name-ASC">A-Z</option>
+                <option value="name-DESC">Z-A</option>
+            </select>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">
         <i class="fas fa-search"></i>
@@ -27,14 +41,14 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price/Sale Price</th>
-            <th>Status</th>
-            <th>Created Date</th>
-            <th>Image</th>
-            <th>Quantity</th>
-            <th class="text-right">Action</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Giá/Khuyến mãi</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Ảnh</th>
+            <th>Số lượng</th>
+            <th class="text-right">Hành động</th>
         </tr>
     </thead>
     <tbody>
@@ -42,19 +56,18 @@
         <tr>
             <td>{{$model->id}}</td>
             <td>{{$model->name}}</td>
-
             <td>{{$model->cat->name}}</td>
             <td>{{$model->price}}/<span class="badge badge-success">{{$model->sale_price}}</span></td>
             <td>
                 @if($model->status == 0)
-                <span class="badge badge-danger">Private</span>
+                <span class="badge badge-danger">Ẩn</span>
 
                 @else
-                <span class="badge badge-success">Publish</span>
+                <span class="badge badge-success">Hiện</span>
                 @endif
             </td>
             <td>{{$model->created_at->format('m-d-Y')}}</td>
-            <td><img src="{{url('public/uploads')}}/{{$model->image}}" width="60"></td>
+            <td><img src="{{url('/uploads')}}/{{$model->image}}" width="60"></td>
             <td>{{$model->qty}}</td>
             <td class="text-right">
                 <a href="{{route('product.edit', $model->id)}}" class="btn btn-sm btn-success">

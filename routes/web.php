@@ -22,6 +22,7 @@ use App\Http\Controllers\AjaxLoginController;
 */
 Route::get('test-email', [HomeController::class, 'testEmail']);
 Route::get('/', 'HomeController@index')->name('home.index'); //route(home.index)
+Route::get('/language/{lang}',[HomeController::class,'lang'])->name('home.lang');;
 Route::get('/shop', 'HomeController@shop')->name('home.shop');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function(){
@@ -29,8 +30,10 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function(){
     Route::get('order', [OrderController::class, 'history'])->name('order.index');
     Route::get('order/detail/{order}', [OrderController::class, 'detail'])->name('order.detail');
     Route::put('order/status/{order}', [OrderController::class, 'status'])->name('order.status');
+    Route::put('order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::get('/changepassword', 'Usercontroller@changepasswordform')->name('user.changepassword');
     Route::post('/changepassword', 'Usercontroller@changepassword')->name('user.changepassword');
+    Route::get('/exportExcel',[Admincontroller::class,'exportExcel'])->name('admin.exportExcel');
 
     Route::resources([
         'category'=>'CategoryController',
@@ -97,7 +100,7 @@ Route::post('/admin/profile', [Usercontroller::class, 'update_avatar'])->name('a
 
 //home
 Route::get('/category/{id}', [HomeController::class, 'category'])->name('category');
-Route::get('/{id}', [HomeController::class, 'product_detail'])->name('product_detail');
+Route::get('/{slug}', [HomeController::class, 'product_detail'])->name('product_detail');
 
 Route::group(['prefix' => 'ajax'], function (){
     Route::post('/login', [AjaxLoginController::class, 'login'])->name('ajax.login');

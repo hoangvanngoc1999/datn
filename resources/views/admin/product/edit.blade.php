@@ -8,23 +8,23 @@
     <div class="row">
         <div class="col-md-9">
             <div class="form-group">
-                <label for="">Name</label>
+                <label for="">Tên sản phẩm</label>
                 <input type="text" value="{{$product->name}}" class="form-control" name="name" placeholder="Input name">
                 @error('name')
                 <small class="help-block">{{$message}}</small>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Quantity</label>
+                <label for="">Số lượng</label>
                 <input type="text" value="{{$product->qty}}" class="form-control" name="qty" placeholder="Input name">
                 @error('qty')
                 <small class="help-block">{{$message}}</small>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Image</label>
+                <label for="">Ảnh sản phẩm</label>
                 <input type="file" class="form-control" name="image" placeholder="Input name">
-                <img src="{{url('public/uploads')}}/{{$product->image}}" width="60">
+                <img src="{{url('/uploads')}}/{{$product->image}}" width="60">
                 @error('image')
                 <small class="help-block">{{$message}}</small>
                 @enderror
@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="">Category</label>
+                <label for="">Danh mục</label>
 
                 <select name="category_id" id="input" class="form-control">
 
@@ -45,7 +45,7 @@
 
             </div>
             <div class="form-group">
-                <label for="">Price</label>
+                <label for="">Giá</label>
                 <input type="text" value="{{$product->price}}" class="form-control" name="price"
                     placeholder="Input name">
                 @error('price')
@@ -53,26 +53,33 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Sale price</label>
+                <label for="">Khuyến mãi</label>
                 <input type="text" value="{{$product->sale_price}}" class="form-control" name="sale_price"
                     placeholder="Input sale price">
                 @error('sale_price')
                 <small class="help-block">{{$message}}</small>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="">Giá nhập</label>
+                <input type="text" class="form-control" name="entry_price" value="{{$product->entry_price}}" placeholder="Input entry price">
+                @error('name')
+                <small class="help-block">{{$message}}</small>
+                @enderror
+            </div>
 
 
             <div class="form-group">
-                <label for="">Status</label>
+                <label for="">Trạng thái</label>
 
                 <div class="radio">
                     <label>
-                        <input type="radio" name="status" value="1" checked>
-                        Public
+                        <input type="radio" name="status" value="1" <?= $product->status == 1 ? 'checked' : '' ?>>
+                        Hiện
                     </label>
                     <label>
-                        <input type="radio" name="status" value="0">
-                        Private
+                        <input type="radio" name="status" value="0" <?= $product->status == 0 ? 'checked' : '' ?>>
+                        Ẩn
                     </label>
                 </div>
 
@@ -95,11 +102,11 @@
 @endsection
 @section('css')
 <!-- summernote -->
-<link rel="stylesheet" href="{{url('public/backend')}}/plugins/summernote/summernote-bs4.min.css">
+<link rel="stylesheet" href="{{url('/backend')}}/plugins/summernote/summernote-bs4.min.css">
 @stop
 @section('js')
 <!-- Summernote -->
-<script src="{{url('public/backend')}}/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="{{url('/backend')}}/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
 $(function() {
     // Summernote

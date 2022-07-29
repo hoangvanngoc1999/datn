@@ -31,7 +31,7 @@ class GuestController extends Controller
      */
     public function index()
     {
-        $data = Customer::orderBy('created_at','DESC')->search()->paginate();
+        $data = Customer::orderBy('created_at','DESC')->search()->paginate(2);
         return view('admin.guest.index', compact('data'));
     }
 

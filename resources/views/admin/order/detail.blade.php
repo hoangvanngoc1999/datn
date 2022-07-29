@@ -69,26 +69,55 @@
                 <td>{{$order->created_at->format('d-m-Y')}}</td>
                 <td>{{number_format($order->getTotal())}}</td>
                 <td>
-                    @if($order->status == 2)
-                    <span class="btn btn-sm-success">Đã giao hàng/Đã thanh toán</span>
-                    @elseif($order->status == 3)
-                    <span class="btn btn-sm-danger"> Đã hủy</span>
-                    @else
                     <form action="{{route('order.status', $order->id)}}" method="POST" class="form-inline" role="form">
                         @csrf @method('PUT')
                         <div class="form-group">
                             <select name="status" id="input" class="form-control" required="required">
                                 <option value="">Chọn trạng thái</option>
+                                @if($order->status == 0)
                                 <option value="0" {{$order->status == 0 ? 'selected' : ''}}>Chưa xác nhận</option>
                                 <option value="1" {{$order->status == 1 ? 'selected' : ''}}>Đã xác nhận</option>
+                                <option value="4" {{$order->status == 4 ? 'selected' : ''}}>Đang giao hàng
+                                </option>
                                 <option value="2" {{$order->status == 2 ? 'selected' : ''}}>Đã giao hàng/Thanh toán
                                 </option>
+                                <option value="5" {{$order->status == 5 ? 'selected' : ''}}>Đổi hàng
+                                </option>
                                 <option value="3" {{$order->status == 3 ? 'selected' : ''}}>Đã hủy</option>
+                                @elseif($order->status == 1 )
+                                <option value="4" {{$order->status == 4 ? 'selected' : ''}}>Đang giao hàng
+                                </option>
+                                <option value="2" {{$order->status == 2 ? 'selected' : ''}}>Đã giao hàng/Thanh toán
+                                </option>
+                                <option value="5" {{$order->status == 5 ? 'selected' : ''}}>Đổi hàng
+                                </option>
+                                <option value="3" {{$order->status == 3 ? 'selected' : ''}}>Đã hủy</option>
+                                @elseif($order->status == 2 )
+
+                                <option value="2" {{$order->status == 2 ? 'selected' : ''}}>Đã giao hàng/Thanh toán
+                                </option>
+                                <option value="5" {{$order->status == 5 ? 'selected' : ''}}>Đổi hàng
+                                </option>
+
+                                @elseif($order->status == 3 )
+
+                                <option value="3" {{$order->status == 3 ? 'selected' : ''}}>Đã hủy</option>
+                                @elseif($order->status == 4 )
+
+                                <option value="2" {{$order->status == 2 ? 'selected' : ''}}>Đã giao hàng/Thanh toán
+                                </option>
+                                <option value="5" {{$order->status == 5 ? 'selected' : ''}}>Đổi hàng
+                                </option>
+                                <option value="3" {{$order->status == 3 ? 'selected' : ''}}>Đã hủy</option>
+                                @elseif($order->status == 5 )
+
+                                <option value="5" {{$order->status == 5 ? 'selected' : ''}}>Đổi hàng</option>
+                                @endif
+
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </form>
-                    @endif
                 </td>
             </tr>
         </tbody>
@@ -113,7 +142,7 @@
                 <td>{{$item->prod->name}}</td>
                 <td>{{$item->prod->qty}}</td>
                 <td>
-                    <img src="{{url('public/uploads')}}/{{$item->prod->image}}" alt="" width="120">
+                    <img src="{{url('/uploads')}}/{{$item->prod->image}}" alt="" width="120">
                 </td>
                 <td>
                     {{$item->quantity}}
