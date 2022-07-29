@@ -7,14 +7,15 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use App\Services\ProductService;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-     /**
+    /**
      * Category Service
      * 
      * @var \App\Services\ProductService productServices
-    */
+     */
     protected $productService;
 
     /**
@@ -26,7 +27,7 @@ class ProductController extends Controller
     {
         $this->productService = $productService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -34,10 +35,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $cats = Category::orderBy('name','ASC')->select('id','name')->get();
-        $data = Product::orderBy('created_at','DESC')->search()->paginate(5);
+        $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
+        $data = Product::search()->paginate(5);
 
-        return view('admin.product.index',compact('data','cats'));
+        return view('admin.product.index', compact('data', 'cats'));
     }
 
     /**
@@ -47,8 +48,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $cats = Category::orderBy('name','ASC')->select('id','name')->get();
-        return view('admin.product.create',compact('cats'));
+        $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
+        return view('admin.product.create', compact('cats'));
     }
 
     /**
@@ -61,20 +62,23 @@ class ProductController extends Controller
     {
         $product = new Product;
         $product->name = $request->input('name');
+        $product->slug = Str::slug($request->input('name'));
         $product->qty = $request->input('qty');
         $product->price = $request->input('price');
+        $product->entry_price = $request->input('entry_price');
         $product->status = $request->input('status');
         $product->category_id = $request->input('category_id');
         $product->sale_price = $request->input('sale_price');
-        if($request->hasfile('image')){
+        // dd($product);
+        if ($request->hasfile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('public/uploads/', $filename);
+            $file->move('uploads/', $filename);
             $product->image = $filename;
         }
         $product->save();
-        return redirect()->back()->with('status','Thêm mới thành công');
+        return redirect()->route('product.index')->with('success', 'Thêm mới sản phẩm thành công');
     }
 
     /**
@@ -96,8 +100,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $cats = Category::orderBy('name','ASC')->select('id','name')->get();
-        return view('admin.product.edit',compact('product','cats'));
+        $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
+        return view('admin.product.edit', compact('product', 'cats'));
     }
 
     /**
@@ -114,21 +118,22 @@ class ProductController extends Controller
         $product->qty = $request->input('qty');
         $product->price = $request->input('price');
         $product->status = $request->input('status');
+        $product->entry_price = $request->input('entry_price');
         $product->category_id = $request->input('category_id');
         $product->sale_price = $request->input('sale_price');
-        if($request->hasfile('image')){
-            $destination = 'public/uploads/'.$product->image;
-            if(File::exists($destination)){
+        if ($request->hasfile('image')) {
+            $destination = 'public/uploads/' . $product->image;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('public/uploads/', $filename);
+            $file->move('uploads/', $filename);
             $product->image = $filename;
         }
         $product->update();
-        return redirect()->route('product.index')->with('status','Thêm mới thành công');
+        return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
     }
 
     /**

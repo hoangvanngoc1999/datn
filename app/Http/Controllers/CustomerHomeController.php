@@ -194,7 +194,8 @@ class CustomerHomeController extends Controller
         // dd($request->all());
         $model = Rating::where($request->only('product_id','customer_id'))->first();
         if($model){
-            Rating::where($request->only('product_id','customer_id'))->update($request->only('rating_start'));
+            // start là bắt đầu. sao là star
+            Rating::where($request->only('product_id','customer_id'))->update(['rating_start'=>$request->rating_start]);
         }else{
             Rating::create($request->only('rating_start', 'product_id','customer_id'));
         }

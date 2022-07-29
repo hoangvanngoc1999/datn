@@ -1,13 +1,14 @@
 @extends('layout.fe')
 @section('main')
 
+<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
 
 <section>
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
                 <div class="left-sidebar">
-                    <h2>Category</h2>
+                    <h2>{{$lang['title']['category']}}</h2>
                     <div class="panel-group category-products" id="accordian">
                         <!--category-productsr-->
                         @foreach($category as $cat)
@@ -21,37 +22,9 @@
                     </div>
                     <!--/category-products-->
 
-                    <div class="brands_products">
-                        <!--brands_products-->
-                        <h2>Brands</h2>
-                        <div class="brands-name">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href=""> <span class="pull-right">(50)</span>Acne</a></li>
-                                <li><a href=""> <span class="pull-right">(56)</span>Grüne Erde</a></li>
-                                <li><a href=""> <span class="pull-right">(27)</span>Albiro</a></li>
-                                <li><a href=""> <span class="pull-right">(32)</span>Ronhill</a></li>
-                                <li><a href=""> <span class="pull-right">(5)</span>Oddmolly</a></li>
-                                <li><a href=""> <span class="pull-right">(9)</span>Boudestijn</a></li>
-                                <li><a href=""> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/brands_products-->
-
-                    <div class="price-range">
-                        <!--price-range-->
-                        <h2>Price Range</h2>
-                        <div class="well">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600"
-                                data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
-                            <b>$ 0</b> <b class="pull-right">$ 600</b>
-                        </div>
-                    </div>
-                    <!--/price-range-->
-
                     <div class="shipping text-center">
                         <!--shipping-->
-                        <img src="{{url('public/fe')}}/images/shipping.jpg" alt="" />
+                        <img src="{{url('/fe')}}/images/home/shipping.jpg" alt="" />
                     </div>
                     <!--/shipping-->
 
@@ -63,7 +36,7 @@
                     <!--product-details-->
                     <div class="col-sm-5">
                         <div class="view-product">
-                            <img src="{{url('public/uploads/'.$pro->image)}}" alt="" />
+                            <img src="{{url('/uploads/'.$pro->image)}}" alt="" />
                             <h3>ZOOM</h3>
                         </div>
 
@@ -71,21 +44,27 @@
                     <div class="col-sm-7">
                         <div class="product-information">
                             <!--/product-information-->
-                            <img src="{{url('public/fe')}}/images/new.jpg" class="newarrival" alt="" />
+                            <!-- <img src="{{url('/fe')}}/images/product-details/new.jpg" class="newarrival" alt="" /> -->
                             <h2>{{$pro->name}}</h2>
 
                             <h2>
                                 Số lượng:@if($pro->qty == 0)
-                                <span class="label label-danger" style="padding-top: 5px;">Hết hàng</span>
+                                <span class="label label-danger"
+                                    style="padding-top: 5px;">{{$lang['product']['product1']}}</span>
                                 @else
                                 <span class="label label-success" style="padding-top: 5px;">{{$pro->qty}}</span>
                                 @endif
                             </h2>
                             <form action="" method="POST">
                                 <span>
-                                    <span>{{number_format($pro->price).' $'}}</span>
+                                    @if($pro->sale_price > 0)
+                                    <span><s>{{'₫'.number_format($pro->price)}}</s> -
+                                        <b>{{'₫'.number_format($pro->sale_price)}}</b></span>
+                                    @else
+                                    <span><b>{{'₫'.number_format($pro->price)}}</b></span>
+                                    @endif
                                     <a href="{{route('cart.add',$pro->id)}}" class="btn btn-default cart"><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
+                                            class="fa fa-shopping-cart"></i> {{$lang['product']['product2']}}</a>
                                 </span>
                             </form>
                             @if(auth()->guard('cus')->check())
@@ -103,10 +82,10 @@
                             @else
                             <div id="rateYo1"></div>
                             @endif
-                            <p><b>Availability:</b> In Stock</p>
-                            <p><b>Condition:</b> New</p>
-                            <p><b>Brand:</b> E-SHOPPER</p>
-                            <a href=""><img src="{{url('public/fe')}}/images/product-details/share.png"
+                            <p><b>{{$lang['product']['product3']}}:</b> {{$lang['product']['product4']}}</p>
+                            <p><b>{{$lang['product']['product5']}}:</b> {{$lang['product']['product6']}}</p>
+                            <p><b>{{$lang['product']['product7']}}:</b> E-SHOPPER</p>
+                            <a href=""><img src="{{url('/fe')}}/images/product-details/share.png"
                                     class="share img-responsive" alt="" /></a>
                         </div>
                         <!--/product-information-->
@@ -118,10 +97,8 @@
                     <!--category-tab-->
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs">
-                            <li><a href="#details" data-toggle="tab">Details</a></li>
-                            <li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
-
-                            <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                            <li class="active"><a href="#reviews"
+                                    data-toggle="tab">{{$lang['product']['product10']}}</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -133,7 +110,7 @@
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <img src="{{url('public/fe')}}/images/gallery1.jpg" alt="" />
+                                            <img src="{{url('/fe')}}/images/home/gallery1.jpg" alt="" />
                                             <h2>$56</h2>
                                             <p>Easy Polo Black Edition</p>
                                             <button type="button" class="btn btn-default add-to-cart"><i
@@ -151,24 +128,24 @@
                                     <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
                                     <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
                                 </ul>
-                                <h4>Bình luận sản phẩm này</h4>
+                                <h4>{{$lang['product']['product11']}}</h4>
                                 @if(Auth::guard('cus')->check())
                                 <form action="" method="post" role="form">
                                     <legend> Xin chào {{Auth::guard('cus')->user()->name}}</legend>
                                     <div class="form-group">
-                                        <label for="">Nội dung bình luận</label>
+                                        <label for="">{{$lang['product']['product12']}}</label>
                                         <input type="hidden" value="{{$pro->id}}" name="product_id">
                                         <textarea id="comment-comment" name="comment" class="form-control" rows="1"
                                             placeholder="Nhập nội dung"></textarea>
                                         <small id="comment-error" class="help-block"></small>
                                     </div>
                                     <button type="button" class="btn btn-default" id="btn-comment">
-                                        Gửi bình luận
+                                        {{$lang['product']['product13']}}
                                     </button>
                                 </form>
                                 @else
                                 <button type="button" class="btn btn-default" data-toggle="modal"
-                                    data-target="#modelId">Vui lòng đăng nhập để bình luận</button>
+                                    data-target="#modelId">{{$lang['product']['product14']}}</button>
                                 @endif
                                 <h3>Các bình luận</h3>
 
@@ -230,6 +207,9 @@
 //Make sure that the dom is ready
 $(function() {
     let ratingavg = '{{$ratingavg}}';
+    if (ratingavg == "") {
+        ratingavg = 0;
+    }
     $("#rateYo").rateYo({
         rating: ratingavg,
         normalFill: "#A0A0A0",

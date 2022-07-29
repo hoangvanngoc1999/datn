@@ -1,4 +1,5 @@
 @extends('layout.fe')
+<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
 @section('main')
 <div class="container">
     <div class="row">

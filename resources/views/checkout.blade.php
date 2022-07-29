@@ -1,6 +1,8 @@
 @extends('layout.fe')
 @section('main')
 
+<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+
 <section id="cart_items">
     <div class="container">
         <div class="row">
@@ -10,61 +12,62 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <legend>Account Information</legend>
+                                <legend>{{$lang['checkout']['checkout1']}}</legend>
                             </div>
                             <div class="form-group">
-                                <label for="">Account Name</label>
+                                <label for="">{{$lang['checkout']['checkout2']}}</label>
                                 <input type="text" class="form-control" name="account_name" placeholder="Input field"
                                     value="{{$account->name}}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="">Account Email</label>
+                                <label for="">{{$lang['checkout']['checkout3']}}</label>
                                 <input type="text" class="form-control" name="account_email" placeholder="Input field"
                                     value="{{$account->email}}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="">Account Phone</label>
+                                <label for="">{{$lang['checkout']['checkout4']}}</label>
                                 <input type="text" class="form-control" name="account_phone" placeholder="Input field"
                                     value="{{$account->phone}}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="">Account Address</label>
+                                <label for="">{{$lang['checkout']['checkout5']}}</label>
                                 <input type="text" class="form-control" name="account_address" placeholder="Input field"
                                     value="{{$account->address}}" disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <legend>Cogsignee Information <input type="checkbox" name="" id="is_me"> Is me</legend>
+                                <legend>{{$lang['checkout']['checkout6']}}<input type="checkbox" name="" id="is_me"> Is
+                                    me</legend>
                             </div>
                             <div class="form-group">
-                                <label for="">Name</label>
+                                <label for="">{{$lang['checkout']['checkout2']}}</label>
                                 <input type="text" class="form-control" name="name" placeholder="Input field">
                                 @error('name') <small class="help-block">{{$message}}</small> @enderror
                             </div>
                             <div class="form-group">
-                                <label for="">Email</label>
+                                <label for="">{{$lang['checkout']['checkout3']}}</label>
                                 <input type="email" class="form-control" name="email" placeholder="Input field">
                                 @error('email') <small class="help-block">{{$message}}</small> @enderror
                             </div>
                             <div class="form-group">
-                                <label for="">Phone</label>
+                                <label for="">{{$lang['checkout']['checkout4']}}</label>
                                 <input type="number" class="form-control" name="phone" placeholder="Input field">
                                 @error('phone') <small class="help-block">{{$message}}</small> @enderror
                             </div>
                             <div class="form-group">
-                                <label for="">Address</label>
+                                <label for="">{{$lang['checkout']['checkout5']}}</label>
                                 <input type="text" class="form-control" name="address" placeholder="Input field">
                                 @error('address') <small class="help-block">{{$message}}</small> @enderror
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="">Order note</label>
+                        <label for="">{{$lang['checkout']['checkout7']}}</label>
                         <textarea name="order_note" id="input" class="form-control" Placeholder="Order Note"></textarea>
                     </div>
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{$lang['checkout']['checkout8']}}</button>
                     </div>
                 </form>
             </div>
@@ -74,11 +77,11 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Subtotal</th>
+                                <th>{{$lang['cart']['cart5']}}</th>
+                                <th>{{$lang['cart']['cart6']}}</th>
+                                <th>{{$lang['cart']['cart7']}}</th>
+                                <th>{{$lang['cart']['cart8']}}</th>
+                                <th>{{$lang['cart']['cart12']}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +90,7 @@
 
                             <tr>
                                 <td>{{$n}}</td>
-                                <td><img src="{{url('public/uploads')}}/{{$item->image}}" alt="" style="width:50px">
+                                <td><img src="{{url('/uploads')}}/{{$item->image}}" alt="" style="width:50px">
                                 </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->quantity}}</td>
@@ -103,8 +106,8 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th>{{$lang['cart']['cart11']}}</th>
+                                    <th>{{$lang['cart']['cart12']}}</th>
                                 </tr>
                             </thead>
                             <tbody>

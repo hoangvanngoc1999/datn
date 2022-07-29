@@ -13,11 +13,11 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{url('public/be')}}/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{url('/be')}}/plugins/fontawesome-free/css/all.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{url('public/be')}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="{{url('/be')}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{url('public/be')}}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{url('/be')}}/dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -31,22 +31,19 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{url('public/be')}}/index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="{{route('admin.index')}}" class="nav-link">Trang chủ</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <div class="dropdown ml-auto">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Hi
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chào
                     {{Auth::guard('')->user()->name}}
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="{{route('admin.profile')}}">Profile</a></li>
-                    <li><a href="{{route('admin.logout')}}">Logout</a></li>
+                    <li><a href="{{route('admin.profile')}}">Thông tin cá nhân</a></li>
+                    <li><a href="{{route('admin.logout')}}">Đăng xuất</a></li>
                 </ul>
             </div>
         </nav>
@@ -55,8 +52,8 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{url('public/be')}}/index3.html" class="brand-link">
-                <img src="{{url('public/be')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+            <a href="{{url('/be')}}/index3.html" class="brand-link">
+                <img src="{{url('/be')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
@@ -66,7 +63,7 @@
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{url('public/be')}}/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
+                        <img src="{{url('/be')}}/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
@@ -167,15 +164,18 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="{{url('public/be')}}/plugins/jquery/jquery.min.js"></script>
+    <script src="{{url('/be')}}/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{url('public/be')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url('/be')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- overlayScrollbars -->
-    <script src="{{url('public/be')}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="{{url('/be')}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="{{url('public/be')}}/dist/js/adminlte.min.js"></script>
+    <script src="{{url('/be')}}/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{url('public/be')}}/dist/js/demo.js"></script>
+    <script src="{{url('/be')}}/dist/js/demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
 </body>
 @yield('js')
 

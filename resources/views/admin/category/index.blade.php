@@ -22,11 +22,11 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Total product</th>
-            <th>Status</th>
-            <th>Created Date</th>
-            <th class="text-right">Action</th>
+            <th>Tên danh mục</th>
+            <th>Tổng sản phẩm</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th class="text-right">Hành động</th>
         </tr>
     </thead>
     <tbody>
@@ -38,10 +38,10 @@
             <td>{{$cat->products ? $cat->products->count() :0}}</td>
             <td>
                 @if($cat->status == 0)
-                <span class="badge badge-danger">Private</span>
+                <span class="badge badge-danger">Ẩn</span>
 
                 @else
-                <span class="badge badge-success">Publish</span>
+                <span class="badge badge-success">Hiện</span>
                 @endif
             </td>
             <td>{{$cat->created_at->format('m-d-Y')}}</td>

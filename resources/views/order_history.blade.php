@@ -1,15 +1,21 @@
 @extends('layout.fe')
 @section('main')
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
 <div class="container">
     <div class="row">
-        <h2>Quản lí đơn hàng</h2>
+        <h2>{{$lang['order']['order9']}}</h2>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ngày đặt</th>
-                    <th>Tổng tiền</th>
-                    <th>Trạng thái</th>
+                    <th>{{$lang['cart']['cart16']}}</th>
+                    <th>{{$lang['cart']['cart12']}}</th>
+                    <th>{{$lang['cart']['cart17']}}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,13 +27,17 @@
                     <td>{{number_format($order->getTotal())}}</td>
                     <td>
                         @if($order->status == 0)
-                        <span class="label label-danger">Chưa xác nhận</span>
+                        <span class="label label-danger">{{$lang['cart']['cart18']}}</span>
                         @elseif($order->status == 1)
-                        <span class="label label-primary">Đã xác nhận</span>
+                        <span class="label label-primary">{{$lang['cart']['cart19']}}</span>
                         @elseif($order->status == 2)
-                        <span class="label label-warning">Đã giao hàng/Thanh toán</span>
-                        @else($order->status == 3)
-                        <span class="label label-success">Đã hủy</span>
+                        <span class="label label-warning">{{$lang['cart']['cart20']}}</span>
+                        @elseif($order->status == 3)
+                        <span class="label label-success">{{$lang['cart']['cart21']}}</span>
+                        @elseif($order->status == 4)
+                        <span class="label label-info">Đang giao hàng</span>
+                        @else($order->status == 5)
+                        <span class="label label-warning">Đổi hàng</span>
                         @endif
                     </td>
                     <td>

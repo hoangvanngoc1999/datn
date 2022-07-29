@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Rating;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -17,9 +20,20 @@ class HomeController extends Controller
      */
     public function index()
     {     
-        $products = Product::newProduct()->search()->get();
+        $products = Product::search()
+        ->where('status','=','1')->get();
         $category = Category::ListCategory()->get();
-        return view('home', compact('products','category'));
+        $newProduct = [
+            Product::orderBy('created_at','DESC')->offset(0)->limit(3)->get(),
+            Product::orderBy('created_at','DESC')->offset(3)->limit(3)->get(),
+            Product::orderBy('created_at','DESC')->offset(6)->limit(3)->get(),
+        ];
+        $topSale = OrderDetail::select(\DB::raw('product.name,product.slug,product.image,product.price,product.sale_price,product_id,sum(quantity) as sum'))
+        ->join('product','product.id','=','product_id')
+        ->join('order','order_id','=','order.id')->WHERE('order.status','=',2)
+        ->where('product.status','=','1')
+        ->groupBy('product_id')->orderBy('sum','DESC')->limit(3)->get();
+        return view('home', compact('products','category','newProduct','topSale'));
     }
     
     /**
@@ -106,11 +120,11 @@ class HomeController extends Controller
         return view('category', compact('category','model'));
     }
 
-    public function product_detail($id)
+    public function product_detail($slug)
     {
-        $pro = Product::find($id);
+        $pro = Product::where('slug','=',$slug)->first();
         $category = Category::ListCategory()->get();
-        $ratingavg= Rating::where('product_id',$id)->avg('rating_start');
+        $ratingavg= Rating::join('product','product_id','=','id')->where('product.slug','=',$slug)->avg('rating_start');
         
         return view('product_detail', compact('category','pro','ratingavg'));
     }
@@ -122,5 +136,13 @@ class HomeController extends Controller
         function($email){
             $email->to('hoangvanngoc1999@gmail.com', 'Đồ đồng nát');
         });
+    }
+    public function lang($lang) {
+        if ($lang == 'VN') {
+            Session::put('lang','vi');
+        } else {
+            Session::put('lang','en');
+        }
+        return redirect()->back();
     }
 }

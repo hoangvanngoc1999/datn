@@ -1,14 +1,15 @@
     @extends('layout.fe')
     @section('main')
 
+    <?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+
     <section id="cart_items">
         <div class="container">
             @if($totalQtt == 0)
 
             <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                Giỏ hàng hiện tại của bạn đang rỗng, vui lòng thêm sản phẩm <a href="{{route('home.index')}}">Continue
-                    shopping</a>
+                {{$lang['cart']['cart3']}} <a href="{{route('home.index')}}">{{$lang['cart']['cart4']}}</a>
             </div>
             @endif
 
@@ -17,11 +18,11 @@
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Subtotal</th>
+                            <th>{{$lang['cart']['cart5']}}</th>
+                            <th>{{$lang['cart']['cart6']}}</th>
+                            <th>{{$lang['cart']['cart7']}}</th>
+                            <th>{{$lang['cart']['cart8']}}</th>
+                            <th>{{$lang['cart']['cart9']}}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -31,13 +32,13 @@
 
                         <tr>
                             <td>{{$n}}</td>
-                            <td><img src="{{url('public/uploads')}}/{{$item->image}}" alt="" style="width:50px"></td>
+                            <td><img src="{{url('/uploads')}}/{{$item->image}}" alt="" style="width:50px"></td>
                             <td>{{$item->name}}</td>
                             <td>
                                 <form action="{{route('cart.update',$item->id)}}" method="get">
                                     <input type="number" name="quantity" min="1" max="10" value="{{$item->quantity}}"
                                         style="width:45px; text-align:center">
-                                    <button>Update</button>
+                                    <button>{{$lang['cart']['cart10']}}</button>
                                 </form>
                             </td>
                             <td>{{number_format($item->price)}}</td>
@@ -59,8 +60,8 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Quantity</th>
-                            <th>Total</th>
+                            <th>{{$lang['cart']['cart11']}}</th>
+                            <th>{{$lang['cart']['cart12']}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,10 +75,10 @@
             </div>
 
             <div class="text-center">
-                <a href="{{route('home.index')}}" class="btn btn-warning">Continue Shopping</a>
-                <a href="{{route('order.checkout')}}" class="btn btn-success">Place Order</a>
+                <a href="{{route('home.index')}}" class="btn btn-warning">{{$lang['cart']['cart13']}}</a>
+                <a href="{{route('order.checkout')}}" class="btn btn-success">{{$lang['cart']['cart14']}}</a>
                 <a href="{{route('cart.clear')}}" class="btn btn-danger"
-                    onclick="return confirm('Bạn đã chắc chưa?')">Clear Cart</a>
+                    onclick="return confirm('Bạn đã chắc chưa?')">{{$lang['cart']['cart15']}}</a>
             </div>
 
         </div>
