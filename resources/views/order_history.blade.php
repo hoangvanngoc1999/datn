@@ -24,7 +24,7 @@ if (!isset($lang) || $lang == 'vi') {
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->created_at->format('d-m-Y')}}</td>
-                    <td>{{number_format($order->getTotal())}}</td>
+                    <td>{{number_format($order->total_price)}}</td>
                     <td>
                         @if($order->status == 0)
                         <span class="label label-danger">{{$lang['cart']['cart18']}}</span>
@@ -50,6 +50,7 @@ if (!isset($lang) || $lang == 'vi') {
                 </tr>
                 @endforeach
             </tbody>
+            {{$orders}}
         </table>
     </div>
 </div>

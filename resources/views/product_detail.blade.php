@@ -3,6 +3,38 @@
 
 <?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
 
+<link rel="stylesheet" href="https://cdn.leanhduc.pro.vn/utilities/animation/shake-effect/style.css"/>
+<style>
+    .khuyenmai {
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+        width: 300px;
+        height: 150px;
+        background-color: #eee;
+        background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/b0a68b86128681.5d909dad4eb86.jpg');
+        background-size: 100% 100%;
+        background-repeat: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 10px;
+        border-radius: 10px;
+    }
+    .khuyenmai p {
+        font-weight: 600;
+        font-size: 18px;
+        color: black;
+    }
+</style>
+@if($promotion!='false')
+<div class="khuyenmai rung" >
+<p>Từ ngày <?= $promotion[0]['time_start'] ?> đến ngày <?= $promotion[0]['time_end'] ?> </p>
+<p>Khuyến mãi lên đến <?= $promotion[0]['detail'] ?> <?= $promotion[0]['type'] ?> mỗi đơn hàng</p>
+</div>
+@endif
+
 <section>
     <div class="container">
         <div class="row">

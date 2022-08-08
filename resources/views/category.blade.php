@@ -1,8 +1,45 @@
 @extends('layout.fe')
 @section('main')
 
-<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
 
+<link rel="stylesheet" href="https://cdn.leanhduc.pro.vn/utilities/animation/shake-effect/style.css" />
+<style>
+.khuyenmai {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 300px;
+    height: 150px;
+    background-color: #eee;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/b0a68b86128681.5d909dad4eb86.jpg');
+    background-size: 100% 100%;
+    background-repeat: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+.khuyenmai p {
+    font-weight: 600;
+    font-size: 18px;
+    color: black;
+}
+</style>
+@if($promotion!='false')
+<div class="khuyenmai rung">
+    <p>Từ ngày <?= $promotion[0]['time_start'] ?> đến ngày <?= $promotion[0]['time_end'] ?> </p>
+    <p>Khuyến mãi lên đến <?= $promotion[0]['detail'] ?> <?= $promotion[0]['type'] ?> mỗi đơn hàng</p>
+</div>
+@endif
 <section id="slider">
     <!--slider-->
     <div class="container">
@@ -102,14 +139,20 @@
             <div class="col-sm-9 padding-right">
                 <div class="features_items">
                     <!--features_items-->
-                    <h2 class="title text-center">{{$model->name}}</h2>
+                    <h2 class="title text-center" style="margin-top: 5px;">{{$model->name}}</h2>
                     @foreach($model->products as $pro)
                     <div class="col-sm-4">
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
                                     <img src="{{url('/uploads/'.$pro->image)}}" alt="" />
-                                    <h2>{{'₫'.number_format($pro->price)}}</h2>
+                                    @if($pro->sale_price > 0)
+                                    <h2><s>{{'₫'.number_format($pro->price)}}</s> -
+                                        <b>{{'₫'.number_format($pro->sale_price)}}</b>
+                                    </h2>
+                                    @else
+                                    <h2><b>{{'₫'.number_format($pro->price)}}</b></h2>
+                                    @endif
                                     <p>{{$pro->name}}</p>
                                     <a href="{{route('cart.add',$pro->id)}}" class="btn btn-default add-to-cart"><i
                                             class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>

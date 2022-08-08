@@ -7,8 +7,11 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Promotion;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+
 use Str;
 use PDF;
 
@@ -20,10 +23,15 @@ class OrderHomeController extends Controller
         $carts = $cart->getCart();
         $totalQtt = $cart->GetTotal();
         $totalPrice = $cart->GetTotal(true);
+        $promotion = Promotion::where('status', '=', '0')->whereRaw('date("' . Carbon::today()->toDateTimeString() . '") BETWEEN date(time_start) and date(time_end)')->limit(1)->get();
+        $checkPromotion = Promotion::where('status', '=', '0')->whereRaw('date("' . Carbon::today()->toDateTimeString() . '") BETWEEN date(time_start) and date(time_end)')->limit(1)->get()->count();
+        if ($checkPromotion == 0) {
+            $promotion = 'false';
+        }
         if ($totalQtt == 0) {
             return view('cart-empty')->with('error', 'Giỏ hàng của bạn đang trống, vui lòng mua hàng');
         }
-        return view('checkout', compact('carts', 'totalQtt', 'totalPrice', 'account'));
+        return view('checkout', compact('carts', 'totalQtt', 'totalPrice', 'account', 'promotion'));
     }
 
     public function post_checkout(Request $request, Cart $cart)
@@ -42,6 +50,28 @@ class OrderHomeController extends Controller
         $data['customer_id'] = $auth->id;
         $data['token'] = $token;
         $totalPrice = $cart->GetTotal(true);
+        $promotion = Promotion::where('status', '=', '0')->whereRaw('date("' . Carbon::today()->toDateTimeString() . '") BETWEEN date(time_start) and date(time_end)')->limit(1)->get();
+        $checkPromotion = Promotion::where('status', '=', '0')->whereRaw('date("' . Carbon::today()->toDateTimeString() . '") BETWEEN date(time_start) and date(time_end)')->limit(1)->get()->count();
+        if ($checkPromotion == 0) {
+            $promotion = 'false';
+        }
+        if ($promotion != 'false') {
+            if ($promotion[0]['type'] == "%") {
+                $totalPrice = ($totalPrice - ($totalPrice / 100 * $promotion[0]['detail']));
+            } else {
+                $totalPrice = ($totalPrice - $promotion[0]['detail']);
+            }
+        }
+        if ($auth->tich_diem > 1000000 && $auth->tich_diem < 2000000) {
+            $totalPrice = $totalPrice - ($totalPrice / 100 * 2);
+        } elseif ($auth->tich_diem > 2000000 && $auth->tich_diem < 3000000) {
+            $totalPrice = $totalPrice - ($totalPrice / 100 * 3);
+        } elseif ($auth->tich_diem > 3000000 && $auth->tich_diem < 4000000) {
+            $totalPrice = $totalPrice - ($totalPrice / 100 * 5);
+        } elseif ($auth->tich_diem > 4000000) {
+            $totalPrice = $totalPrice - ($totalPrice / 100 * 8);
+        }
+
         $data['total_price'] = $totalPrice;
         if ($order = Order::create($data)) {
             $carts = $cart->getCart();
@@ -51,7 +81,7 @@ class OrderHomeController extends Controller
                     'product_id' => $item->id,
                     'quantity' => $item->quantity,
                     'price' => $item->price,
-                    'entry_price' => $item->entry_price
+                    'entry_price' => $item->entry_price * $item->quantity
                 ]);
             }
             // send email xác nhận
@@ -77,7 +107,7 @@ class OrderHomeController extends Controller
     public function history()
     {
         $account_id = Auth::guard('cus')->user()->id;
-        $orders = Order::where('customer_id', $account_id)->paginate();
+        $orders = Order::where('customer_id', $account_id)->orderBy('created_at', 'DESC')->paginate(5);
         return view('order_history', compact('orders'));
     }
 

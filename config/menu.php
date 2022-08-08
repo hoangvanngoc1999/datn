@@ -7,6 +7,21 @@ return [
         'icon' => 'fa-home'
     ],
     [
+        'label' => 'Quản lí Khuyến Mãi',
+        'route' => 'admin.promotion',
+        'icon' => 'fa-bullhorn',
+        'items' => [
+            [
+                'label' => 'Danh sách khuyến mãi',
+                'route' => 'admin.promotion',
+            ],
+            [
+                'label' => 'Thêm khuyến mãi',
+                'route' => 'admin.create-promotion',
+            ]
+        ]
+    ],
+    [
         'label' => 'Quản lí danh mục',
         'route' => 'category.index',
         'icon' => 'fa-shopping-cart',

@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $n=1; ?>
+                <?php $n = 1; ?>
                 @foreach($data as $item)
                 <tr>
                     <td>{{$n}}</td>
@@ -45,7 +45,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="" class="btn btn-sm btn-success">
+                        <a href="{{route('user.edit', $item->id)}}" class="btn btn-sm btn-success">
                             <i class="fas fa-edit"></i>
                         </a>
                         <a href="{{route('user.destroy', $item->id)}}" class="btn btn-sm btn-danger btndelete">

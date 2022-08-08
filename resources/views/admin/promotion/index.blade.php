@@ -22,52 +22,41 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Tên danh mục</th>
-            <th>Tổng sản phẩm</th>
-            <th>Trạng thái</th>
-            <th>Người tạo</th>
+            <th>Tên khuyến mãi</th>
+            <th>Thời gian bắt đầu</th>
+            <th>Thời gian kết thúc</th>
             <th>Ngày tạo</th>
+            <th>Trạng thái</th>
             <th class="text-right">Hành động</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($data as $cat)
+        <?php foreach ($promotion as $pro) { ?>
         <tr>
-            <td>{{$cat->id}}</td>
-            <td>{{$cat->name}}</td>
-            <td>{{$cat->products ? $cat->products->count() :0}}</td>
-            <td>
-                @if($cat->status == 0)
-                <span class="badge badge-danger">Ẩn</span>
-
-                @else
-                <span class="badge badge-success">Hiện</span>
-                @endif
-            </td>
-            <td>{{$cat->created_at->format('m-d-Y')}}</td>
-            <td class="text-right">
-                <a href="{{route('category.edit', $cat->id)}}" class="btn btn-sm btn-success">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="{{route('category.destroy', $cat->id)}}" class="btn btn-sm btn-danger btndelete">
-                    <i class="fas fa-trash"></i>
-                </a>
+            <td>{{$pro['id']}}</td>
+            <td>{{$pro['name']}}</td>
+            <td>{{$pro['time_start']}}</td>
+            <td>{{$pro['time_end']}}</td>
+            <td>{{$pro['created_at']}}</td>
+            <td><?= $pro['status'] == 0 ? 'Hoạt động' : 'Đã tắt' ?></td>
+            <td style="text-align: right"><a href="{{route('admin.edit-store-promotion',$pro['id'])}}">Xem chi tiết</a>
             </td>
         </tr>
-        @endforeach
+
+        <?php } ?>
+        <!-- // code here -->
+
     </tbody>
 </table>
 <form method="POST" action="" id="form-delete">
     @csrf @method('delete')
 </form>
-
 <hr>
 <div>
-    {{$data->appends(request()->all())->links()}}
+    {{$promotion->appends(request()->all())->links()}}
 </div>
 
 @endsection
-
 @section('js')
 
 <script>

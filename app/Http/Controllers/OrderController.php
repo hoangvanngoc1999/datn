@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -12,7 +13,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::search()->paginate(15);
+        $orders = Order::search()->orderBY('id', 'DESC')->paginate(15);
         return view('admin.order.index', compact('orders'));
     }
 
@@ -29,8 +30,11 @@ class OrderController extends Controller
 
     public function status(Order $order, Request $request)
     {
+
         $data = $request->only('status');
         $oldStatus = $order->status;
+        $customer = $order->customer_id;
+        $total_price = $order->total_price;
         if ($order->update($data)) {
             $detail = OrderDetail::select('product.id', 'order_detail.quantity', 'product.qty')
                 ->join('product', 'product.id', '=', 'order_detail.product_id')
@@ -51,7 +55,11 @@ class OrderController extends Controller
                         Product::where('id', '=', $det['id'])->update(['qty' => ($det['qty'] - $det['quantity'])]);
                     }
                 }
-            } else if( $request->status == 3) {
+                if ($request->status == 2) {
+                    $tich_diem = Customer::select('tich_diem')->where('id', '=', $customer)->get();
+                    Customer::where('id', '=', $customer)->update(['tich_diem' => ($tich_diem[0]['tich_diem'] + $total_price)]);
+                }
+            } else if ($request->status == 3) {
                 if ($oldStatus != 0) {
                     foreach ($detail as $dt) {
                         Product::where('id', '=', $dt['id'])->update(['qty' => ($dt['qty'] + $dt['quantity'])]);

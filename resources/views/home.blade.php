@@ -1,7 +1,44 @@
 @extends('layout.fe')
 @section('main')
 
-<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
+<link rel="stylesheet" href="https://cdn.leanhduc.pro.vn/utilities/animation/shake-effect/style.css" />
+<style>
+.khuyenmai {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 300px;
+    height: 150px;
+    background-color: #eee;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/b0a68b86128681.5d909dad4eb86.jpg');
+    background-size: 100% 100%;
+    background-repeat: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+.khuyenmai p {
+    font-weight: 600;
+    font-size: 18px;
+    color: black;
+}
+</style>
+@if($promotion!='false')
+<div class="khuyenmai rung">
+    <p>Từ ngày <?= $promotion[0]['time_start'] ?> đến ngày <?= $promotion[0]['time_end'] ?> </p>
+    <p>Khuyến mãi lên đến <?= $promotion[0]['detail'] ?> <?= $promotion[0]['type'] ?> mỗi đơn hàng</p>
+</div>
+@endif
 
 <section id="slider">
     <!--slider-->
@@ -106,23 +143,25 @@
                         <select name="cat_id" class="form-control">
                             <option value="">Chọn danh mục</option>
                             @foreach($category as $cat)
-                            <?php $selected = $cat->id == request('cat_id')? 'selected' :'';?>
+                            <?php $selected = $cat->id == request('cat_id') ? 'selected' : ''; ?>
                             <option value="{{$cat->id}}" {{$selected}}>{{$cat->name}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <select name="price" class="form-control">
                             <option value="">Sắp xếp</option>
                             <option value="price-ASC">Giá từ thấp tới cao</option>
                             <option value="price-DESC">Giá từ cao xuống thấp</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="">Chọn giá từ</label>
-                        <input style="max-width: 75px;" type="number" class="form-control" name='for-price' value="{{request('for-price')}}" placeholder="Nhập giá tiền">
+                        <input style="max-width: 75px;" type="number" class="form-control" name='for-price'
+                            value="{{request('for-price')}}" placeholder="Nhập giá tiền">
                         <label for="">Đến</label>
-                        <input style="max-width: 75px;" type="number" class="form-control" name='to-price' value="{{request('to-price')}}" placeholder="Nhập giá tiền">
+                        <input style="max-width: 75px;" type="number" class="form-control" name='to-price'
+                            value="{{request('to-price')}}" placeholder="Nhập giá tiền">
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i>
@@ -134,14 +173,13 @@
                     <!--features_items-->
                     <h2 class="title text-center" style="padding-top:5px">{{$lang['title']['product']}}</h2>
                     @foreach($products as $pro)
-                    @if($pro->sale_price>0)
-                    @else
+
                     <a href="{{route('product_detail', $pro->slug)}}">
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="{{url('uploads/'.$pro->image)}}" alt="" />
+                                        <img src="{{url('uploads/'.$pro->image)}}" alt="" style="height:237px;" />
                                         <h2>{{'₫'.number_format($pro->price)}}</h2>
                                         <p>{{$pro->name}}</p>
                                         <a href="{{route('product_detail', $pro->slug)}}"
@@ -154,10 +192,11 @@
                             </div>
                         </div>
                     </a>
-                    @endif
-                    @endforeach
-                </div>
 
+                    @endforeach
+
+                </div>
+                {{$products}}
                 <!--features_items-->
                 <!--new_items-->
                 <div class="recommended_items">
@@ -170,12 +209,13 @@
                             <div
                                 class="<?= count($newProduct[0]) == 3 && count($newProduct[1]) != 0 ? 'active' : ''  ?> item">
                                 <?php foreach ($newProduct[0] as $nPrd) {   ?>
-                                @if($nPrd->sale_price > 0)
+
                                 <div class="col-sm-4">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="{{url('')}}/uploads/{{$nPrd['image']}}" alt="" />
+                                                <img src="{{url('')}}/uploads/{{$nPrd['image']}}" alt=""
+                                                    style="height:237px;" />
                                                 @if($nPrd->sale_price > 0)
                                                 <h2><s>{{'₫'.number_format($nPrd['price'])}}</s> -
                                                     <b>{{'₫'.number_format($nPrd['sale_price'])}}</b>
@@ -191,8 +231,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @else
-                                @endif
+
                                 <?php   }   ?>
                             </div>
                             <div class="item">
@@ -202,7 +241,8 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="{{url('')}}/uploads/{{$nPrd['image']}}" alt="" />
+                                                <img src="{{url('')}}/uploads/{{$nPrd['image']}}" alt=""
+                                                    style="height:237px;" />
                                                 @if($nPrd->sale_price > 0)
                                                 <h2><s>{{'₫'.number_format($nPrd['price'])}}</s> -
                                                     <b>{{'₫'.number_format($nPrd['sale_price'])}}</b>
@@ -222,7 +262,6 @@
                                 @endif
                                 <?php   }   ?>
                             </div>
-                            <?php if(count($newProduct[2]) > 0) { ?>
                             <div class="item">
                                 <?php foreach ($newProduct[2] as $nPrd) {   ?>
                                 @if($nPrd->sale_price > 0)
@@ -230,7 +269,8 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="{{url('')}}/uploads/{{$nPrd['image']}}" alt="" />
+                                                <img src="{{url('')}}/uploads/{{$nPrd['image']}}" alt=""
+                                                    style="height:237px;" />
                                                 @if($nPrd->sale_price > 0)
                                                 <h2><s>{{'₫'.number_format($nPrd['price'])}}</s> -
                                                     <b>{{'₫'.number_format($nPrd['sale_price'])}}</b>
@@ -238,7 +278,6 @@
                                                 @else
                                                 <h2><b>{{'₫'.number_format($nPrd['price'])}}</b></h2>
                                                 @endif
-                                                <!-- <h2>{{'₫'.number_format($nPrd['sale_price'])}}</h2> -->
                                                 <p>{{$nPrd['name']}}</p>
                                                 <a href="{{route('product_detail', $nPrd['slug'])}}"
                                                     class="btn btn-default add-to-cart"><i
@@ -251,7 +290,6 @@
                                 @endif
                                 <?php   }   ?>
                             </div>
-                            <?php } ?>
                         </div>
                         <?php if (count($newProduct[0]) == 3 && count($newProduct[1]) != 0) { ?>
                         <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
@@ -279,7 +317,8 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="{{url('')}}/uploads/{{$sPrd['image']}}" alt="" />
+                                                <img src="{{url('')}}/uploads/{{$sPrd['image']}}" alt=""
+                                                    style="height:237px;" />
                                                 @if($sPrd->sale_price > 0)
                                                 <h2><s>{{'₫'.number_format($sPrd['price'])}}</s> -
                                                     <b>{{'₫'.number_format($sPrd['sale_price'])}}</b>

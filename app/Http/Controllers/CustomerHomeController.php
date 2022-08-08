@@ -70,6 +70,7 @@ class CustomerHomeController extends Controller
                 Auth::guard('cus')->logout();
                 return redirect()->route('customer.login')->with('error', 'Tài khoản của bạn chưa được kích hoạt, vui lòng vào email của bạn để kích hoạt');
             }
+            // dd(Auth::guard('cus'));
             return redirect()->route('home.index');
         }
         return redirect()->back()->with('error','Mật khẩu không đúng');

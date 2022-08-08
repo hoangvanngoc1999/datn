@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Excel;
+use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -16,12 +17,14 @@ class ExportExcel implements FromView
 {
     /**
      * 
-     */  
+     */
     public function view(): View
     {
-        $data = OrderDetail::select(\DB::raw('product_id,product.name,order_detail.price,order_detail.entry_price,sum(order_detail.quantity) as soluong, month(order_detail.created_at) as MonthC,year(order_detail.created_at) as YearC'))-> join('product','id','product_id')->join('order','order.id','order_detail.order_id')->where('order.status','=','2') ->groupBy('product_id')->orderBy('MonthC')->orderBy('YearC')->get(); 
+        $data = OrderDetail::select(\DB::raw('product_id,product.name,order_detail.price,sum(order_detail.entry_price) as entry_price,sum(order_detail.quantity) as soluong, month(order_detail.created_at) as MonthC,year(order_detail.created_at) as YearC'))->join('product', 'id', 'product_id')->join('order', 'order.id', 'order_detail.order_id')->where('order.status', '=', '2')->groupBy('product_id', 'MonthC', 'YearC')->orderBy('MonthC')->orderBy('YearC')->get();
+        $bill = Order::where('order.status', '=', '2')->get()->sum('total_price');
         return view('admin.excel', [
-            'data' =>  $data
+            'data' =>  $data,
+            'giaban' => $bill,
         ]);
     }
     // public function collection()

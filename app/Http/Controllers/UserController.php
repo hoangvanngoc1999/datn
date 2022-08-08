@@ -48,8 +48,8 @@ class UserController extends Controller
             'address' => $request->address,
             'role' => $request->status
         ];
-        if(User::create($data)){
-            return redirect()->route('user.index')->with('success','Thêm mới sản phẩm thành công');
+        if (User::create($data)) {
+            return redirect()->route('user.index')->with('success', 'Thêm mới tài khoản thành công');
         }
     }
 
@@ -89,8 +89,10 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+        $user->address = $request->input('address');
         $user->update();
-        return redirect()->route('admin.profile');
+        return redirect()->route('user.index')->with('success', 'Cập nhật thông tin nhân viên thành công');
     }
 
     /**
@@ -102,7 +104,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('user.index')->with('success','Xóa thông tin thành công');
+        return redirect()->route('user.index')->with('success', 'Xóa thông tin thành công');
     }
 
     public function changepasswordform()

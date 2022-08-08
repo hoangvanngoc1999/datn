@@ -43,13 +43,6 @@
 
             </div>
             <div class="form-group">
-                <label for="">Giá nhập</label>
-                <input type="text" class="form-control" name="import_price" placeholder="Input name">
-                @error('import_price')
-                <small class="help-block">{{$message}}</small>
-                @enderror
-            </div>
-            <div class="form-group">
                 <label for="">Giá</label>
                 <input type="text" class="form-control" name="price" placeholder="Input name">
                 @error('price')

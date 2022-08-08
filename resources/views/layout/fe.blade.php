@@ -106,7 +106,25 @@
                                             class="fa fa-shopping-cart"></i>{{$lang['topNav']['nav3']}}</a></li>
                                 @if(Auth::guard('cus')->check())
                                 <li>
-                                    <a href=""><i class="fa fa-user"></i>Hi {{Auth::guard('cus')->user()->name}}</a>
+                                    <a href=""><i class="fa fa-user"></i>Hi {{Auth::guard('cus')->user()->name}}
+                                        <?php if (Auth::guard('cus')->user()->tich_diem > 1000000 && Auth::guard('cus')->user()->tich_diem < 2000000) {
+                                        ?>
+                                        <span>Đồng</span>
+                                        <?php
+                                        } elseif (Auth::guard('cus')->user()->tich_diem > 2000000 && Auth::guard('cus')->user()->tich_diem < 3000000) {
+                                        ?>
+                                        <span>Bạc</span>
+                                        <?php
+                                        } elseif (Auth::guard('cus')->user()->tich_diem > 3000000 && Auth::guard('cus')->user()->tich_diem < 4000000) {
+                                        ?>
+                                        <span>Vàng</span>
+                                        <?php
+                                        } elseif (Auth::guard('cus')->user()->tich_diem > 4000000) {
+                                        ?>
+                                        <span>Kim Cương</span>
+                                        <?php
+                                        } ?>
+                                    </a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="{{route('customer.profile')}}"
                                                 style="color: #000;">{{$lang['topNav']['nav4']}}</a>
