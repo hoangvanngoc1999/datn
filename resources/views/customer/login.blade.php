@@ -1,13 +1,18 @@
 @extends('layout.fe')
 @section('title', 'title')
-<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
 @section('main')
 <div class="container">
     <div class="col-md-6">
         <form action="" method="POST" class="form-horizontal">
             @csrf
             <div class="form-group">
-                <legend>Form Login</legend>
+                <legend>Đăng nhập</legend>
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
@@ -20,7 +25,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="" class="control-label">Password</label>
+                    <label for="" class="control-label">Mật khẩu</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" name="password" placeholder="Input Address">
@@ -32,7 +37,7 @@
                     <div class="col-sm-6">
                         <label>
                             <input type="checkbox" value="1" name="remember">
-                            Remember Login
+                            Ghi nhớ mật khẩu
                         </label>
                     </div>
                     <div class="col-sm-6">
@@ -42,7 +47,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-10 col-sm-offset-2">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
                 </div>
             </div>
         </form>

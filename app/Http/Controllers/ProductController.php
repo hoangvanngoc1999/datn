@@ -36,7 +36,7 @@ class ProductController extends Controller
     public function index()
     {
         $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
-        $data = Product::search()->paginate(5);
+        $data = Product::search()->orderBy('id', 'DESC')->paginate(5);
 
         return view('admin.product.index', compact('data', 'cats'));
     }

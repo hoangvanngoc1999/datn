@@ -11,11 +11,13 @@
                 <label for="">Email:</label>{{Auth::guard('')->user()->email}}
             </div>
             <div class="form-group">
+                <label for="">Số điện thoại:</label>{{Auth::guard('')->user()->phone}}
+            </div>
+            <div class="form-group">
+                <label for="">Địa chỉ:</label>{{Auth::guard('')->user()->address}}
+            </div>
+            <div class="form-group">
                 <a href="{{route('user.changepassword', auth::user()->id)}}" class="btn btn-sm btn-success">
-                    <i class="fas fa-edit"></i>
-                </a>
-
-                <a href="{{route('user.edit', auth::user()->id)}}" class="btn btn-sm btn-primary">
                     <i class="fas fa-edit"></i>
                 </a>
             </div>

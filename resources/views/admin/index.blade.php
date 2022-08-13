@@ -94,7 +94,6 @@ small {
                         <i class="fa fa-cart-plus fa-5x"></i>
                         <hr>
                         <p class="h2 text-thin"><?= (string) number_format($data['orderToday']) ?></p>
-                        <!-- <small><span class="text-semibold"><i class="fa fa-shopping-cart fa-fw"></i> 954</span> Sales in this month</small> -->
                     </div>
                 </div>
             </a>
@@ -106,7 +105,6 @@ small {
                     <i class="fa fa-dollar fa-5x"></i>
                     <hr>
                     <p class="h2 text-thin"><?= (string) number_format($data['revenueToday']) ?></p>
-                    <!-- <small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> 154</span> Unapproved comments</small> -->
                 </div>
             </div>
         </div>
@@ -117,7 +115,6 @@ small {
                     <i class="fa fa-dollar fa-5x"></i>
                     <hr>
                     <p class="h2 text-thin"><?= (string) number_format($data['profitToday']) ?></p>
-                    <!-- <small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> 154</span> Unapproved comments</small> -->
                 </div>
             </div>
         </div> --}}
@@ -129,7 +126,6 @@ small {
                         <i class="fa fa-users fa-5x"></i>
                         <hr>
                         <p class="h2 text-thin"><?= (string) number_format($data['customer']) ?></p>
-                        <!-- <small><span class="text-semibold">7%</span> Higher than yesterday</small> -->
                     </div>
                 </div>
             </a>
@@ -142,7 +138,6 @@ small {
                         <i class="fa fa-comment fa-5x"></i>
                         <hr>
                         <p class="h2 text-thin"><?= (string) number_format($data['product']) ?></p>
-                        <!-- <small><span class="text-semibold"><i class="fa fa-dollar fa-fw"></i> 22,675</span> Total Earning</small> -->
                     </div>
                 </div>
             </a>
@@ -152,7 +147,7 @@ small {
 <div class="container bootstrap snippets bootdey" style="max-width:100%">
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
-            <a href="{{route('category.index')}}">
+            <a href="">
                 <div class="panel panel-dark panel-colorful">
                     <div class="panel-body text-center">
                         <p class="text-uppercase mar-btm text-sm">Lợi nhuận trong ngày</p>
@@ -202,16 +197,38 @@ small {
     </div>
 </div>
 <hr>
+<br>
+<h2>Khách hàng thân thiết:</h2>
+<form class="form-inline">
+    <div class="form-group">
+        <label for="">Lọc theo cấp thành viên : </label>&emsp;
+        <select name="queryTv" class="form-control">
+            <option value="0" selected>Chon cấp thành viên</option>
+            <option value="1">Bạc</option>
+            <option value="2">Đồng</option>
+            <option value="3">Vàng</option>
+            <option value="4">Kim Cương</option>
+            <option value="5">Thành Viên Thường</option>
+        </select>
+
+    </div>
+    <div class="form-group">
+        <label for="">Lọc theo tên : </label>
+        <input type="text" name="text_search_tv" id="">
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</form>
+<br>
 <table class="table table-hover">
-    <br>
-    <h2>Khách hàng thân thiết:</h2>
-    <br>
+
     <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Tổng hoá đơn đã mua</th>
+            <th>Thành viên</th>
             <th>Tổng tiền tích lũy</th>
             <th class="text-right">Trạng thái</th>
 
@@ -220,11 +237,20 @@ small {
     <tbody>
         <?php foreach ($customer as $ctm) { ?>
         <tr>
-            <td>{{$ctm['customer_id']}}</td>
+            <td>{{$ctm['id']}}</td>
             <td>{{$ctm['name']}}</td>
             <td>{{$ctm['email']}}</td>
-            <td>{{$ctm['countOrder']}}</td>
-            <td>{{$ctm['sumPrice']}}</td>
+            <td>
+                @if($ctm['tich_diem'] > 1000000 && $ctm['tich_diem'] < 2000000) Thành Viên Đồng
+                    @elseif($ctm['tich_diem']> 2000000 && $ctm['tich_diem'] < 3000000) Thành Viên Bạc
+                        @elseif($ctm['tich_diem']> 3000000 && $ctm['tich_diem'] < 4000000) Thành Viên Vàng
+                            @elseif($ctm['tich_diem']> 4000000)
+                            Thành Viên Kim Cương
+                            @else
+                            Thành Viên Thường
+                            @endif
+            </td>
+            <td>{{$ctm['tich_diem']}}</td>
             <td class="text-right">
                 <!-- <span class="badge badge-danger">Block</span> -->
                 <span class="badge badge-success">Active</span>

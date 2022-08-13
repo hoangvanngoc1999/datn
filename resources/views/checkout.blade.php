@@ -1,7 +1,12 @@
 @extends('layout.fe')
 @section('main')
 
-<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
 
 <section id="cart_items">
     <div class="container">
@@ -85,7 +90,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $n=1; ?>
+                            <?php $n = 1; ?>
                             @foreach ($carts as $key => $item)
 
                             <tr>
@@ -114,7 +119,143 @@
                                 <tr>
                                     <td>{{$totalQtt}}</td>
                                     <td>{{$totalPrice}}</td>
+
                                 </tr>
+                                @if($promotion != 'false')
+                                <tr>
+                                    <td></td>
+                                    <?php
+                                    if ($totalQtt > 0) {
+                                        if ($promotion[0]['type'] == "%") {
+                                            $total = $totalPrice - ($totalPrice / 100 * $promotion[0]['detail']);
+                                        } else {
+                                            $total = ((int)$totalPrice - (int)$promotion[0]['detail']);
+                                        }
+                                    ?>
+                                    <td><span style="color:green">
+                                            {{'-'.$promotion[0]['detail'].$promotion[0]['type']}}</span>
+                                        : Sự kiện khuyến mãi </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        {{$total}}
+                                    </td>
+                                </tr>
+                                <?php if (Auth::guard('cus')->user()->tich_diem > 1000000 && Auth::guard('cus')->user()->tich_diem < 2000000) {
+                                            $giam = 2;
+                                ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green">-2% </span>: Thành viên đồng
+                                    </td>
+                                </tr>
+                                <?php
+                                        } elseif (Auth::guard('cus')->user()->tich_diem > 2000000 && Auth::guard('cus')->user()->tich_diem < 3000000) {
+                                            $giam = 3;
+                                ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green">-3%</span>: Thành viên bạc
+                                    </td>
+                                </tr>
+                                <?php
+                                        } elseif (Auth::guard('cus')->user()->tich_diem > 3000000 && Auth::guard('cus')->user()->tich_diem < 4000000) {
+                                            $giam = 5;
+                                ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green"> -5% </span>: Thành viên vàng
+                                    </td>
+                                </tr>
+                                <?php
+                                        } elseif (Auth::guard('cus')->user()->tich_diem > 4000000) {
+                                            $giam = 8;
+                                ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green"> -8%</span> : Thành viên kim cương
+                                    </td>
+                                </tr>
+                                <?php
+                                        } ?>
+                                <?php if (Auth::guard('cus')->user()->tich_diem > 1000000) {
+                                            $total = $total - ($total / 100 * $giam)
+                                ?> <tr>
+                                    <td></td>
+                                    <td>
+                                        {{$total}}
+                                    </td>
+                                </tr>
+                                <?php
+                                        }  ?>
+                                <?php
+                                    } else {
+                                        $total = $totalPrice; ?>
+                                <td>{{$totalPrice}}</td>
+                                </tr>
+                                <?php }
+                            ?>
+                                @endif
+
+                                @if(Auth::guard('cus')->user()->tich_diem > 1000000 && $promotion == 'false')
+                                <?php if (Auth::guard('cus')->user()->tich_diem > 1000000 && Auth::guard('cus')->user()->tich_diem < 2000000) {
+                                $giam = 2;
+                            ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green">-2% </span>: Thành viên đồng
+                                    </td>
+                                </tr>
+                                <?php
+                            } elseif (Auth::guard('cus')->user()->tich_diem > 2000000 && Auth::guard('cus')->user()->tich_diem < 3000000) {
+                                $giam = 3;
+                            ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green">-3%</span>: Thành viên bạc
+                                    </td>
+                                </tr>
+                                <?php
+                            } elseif (Auth::guard('cus')->user()->tich_diem > 3000000 && Auth::guard('cus')->user()->tich_diem < 4000000) {
+                                $giam = 5;
+                            ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green"> -5% </span>: Thành viên vàng
+                                    </td>
+                                </tr>
+                                <?php
+                            } elseif (Auth::guard('cus')->user()->tich_diem > 4000000) {
+                                $giam = 8;
+                            ?>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <span style="color:green"> -8%</span> : Thành viên kim cương
+                                    </td>
+                                </tr>
+                                <?php
+                            } ?>
+                                <?php if (Auth::guard('cus')->user()->tich_diem > 1000000) {
+                                $totalPrice = $totalPrice - ($totalPrice / 100 * $giam)
+                            ?> <tr>
+                                    <td></td>
+                                    <td>
+                                        {{$totalPrice}}
+                                    </td>
+                                </tr>
+                                <?php
+                            }  ?>
+
+                                @endif
                             </tbody>
                         </table>
 

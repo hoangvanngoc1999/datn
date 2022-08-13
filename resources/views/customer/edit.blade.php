@@ -1,5 +1,10 @@
 @extends('layout.fe')
-<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
 @section('main')
 <div class="container">
     <div class="row">
@@ -7,7 +12,7 @@
             @csrf @method('PUT')
             <input type="hidden" id="" value="{{$customer->id}}">
             <div class="form-group">
-                <label for="">Name</label>
+                <label for="">Họ và tên</label>
                 <input type="text" value="{{$customer->name}}" class="form-control" name="name"
                     placeholder="Input field">
                 @error('name')
@@ -16,14 +21,14 @@
             </div>
             <div class="form-group">
                 <label for="">Email</label>
-                <input type="text" value="{{$customer->email}}" class="form-control" name="email"
+                <input type="email" value="{{$customer->email}}" class="form-control" name="email"
                     placeholder="Input field">
                 @error('email')
                 <small class="help-block">{{$message}}</small>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Phone</label>
+                <label for="">Số điện thoại</label>
                 <input type="text" value="{{$customer->phone}}" class="form-control" name="phone"
                     placeholder="Input field">
                 @error('phone')
@@ -31,7 +36,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Address</label>
+                <label for="">Địa chỉ</label>
                 <input type="text" value="{{$customer->address}}" class="form-control" name="address"
                     placeholder="Input field">
                 @error('address')

@@ -67,7 +67,7 @@
             <tr>
                 <td>{{$order->id}}</td>
                 <td>{{$order->created_at->format('d-m-Y')}}</td>
-                <td>{{number_format($order->getTotal())}}</td>
+                <td>{{number_format($order->total_price)}}</td>
                 <td>
                     <form action="{{route('order.status', $order->id)}}" method="POST" class="form-inline" role="form">
                         @csrf @method('PUT')

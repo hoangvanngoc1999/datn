@@ -70,7 +70,7 @@
                     <td>{{$order->cus->phone}}</td>
                     <td>{{$order->cus->address}}</td>
                     <td>{{$order->created_at->format('d-m-Y')}}</td>
-                    <td>{{number_format($order->getTotal())}}</td>
+                    <td>{{number_format($order->total_price)}}</td>
                     <td>
                         @if($order->status == 0)
                         <span class="label label-danger">Chưa xác nhận</span>
@@ -92,9 +92,6 @@
                             PDF</a>
                         <a href="{{route('order.detail', $order->id)}}?download=true" class="btn btn-danger">Tải
                             PDF</a>
-                        <a href="{{route('order.destroy', $order->id)}}" class="btn btn-sm btn-danger btndelete">
-                            <i class="fas fa-trash"></i>
-                        </a>
                     </td>
                 </tr>
                 @endforeach

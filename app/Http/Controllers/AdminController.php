@@ -25,21 +25,33 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $orderToday = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->count();
-        $revenueToday = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->where('status', '=', 2)->sum('total_price'); 
-        $customer = Order::whereDate('created_at','=',Carbon::today()->toDateString())->groupBy('customer_id')->count();
-        $product = OrderDetail::join('order','order.id','=','order_id')->whereDate('order.created_at','=',Carbon::today()->toDateString())->where('order.status','=','2')->sum('quantity');
-        $prdtd = Order::select('order_detail.quantity','order_detail.price','order_detail.entry_price')->join('order_detail','order_id','=','id')->where('order.status','=','2')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->get(); 
-        $profitToday = 0;
-        if(isset($request->chooseDay)) {
-            $customer = Order::whereDate('created_at','=',$request->chooseDay)->groupBy('order.customer_id')->get()->count();
+        $revenueToday = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->where('status', '=', 2)->sum('total_price');
+        $customer = Order::whereDate('created_at', '=', Carbon::today()->toDateString())->groupBy('customer_id')->count();
+        $product = OrderDetail::join('order', 'order.id', '=', 'order_id')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->where('order.status', '=', '2')->sum('quantity');
+        $prdtd = Order::select('order_detail.quantity', 'order_detail.price', 'order_detail.entry_price')->join('order_detail', 'order_id', '=', 'id')->where('order.status', '=', '2')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->get();
+        $bill = Order::where('order.status', '=', '2')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->get();
+
+        if (isset($request->chooseDay)) {
+            $customer = Order::whereDate('created_at', '=', $request->chooseDay)->groupBy('order.customer_id')->get()->count();
             $orderToday = Order::whereDate('created_at', '=', $request->chooseDay)->count();
             $revenueToday = Order::whereDate('created_at', '=', $request->chooseDay)->where('status', '=', 2)->sum('total_price');
-            $prdtd = Order::select('order_detail.quantity','order_detail.price','order_detail.entry_price')->join('order_detail','order_id','=','id')->where('order.status','=','2')->whereDate('order.created_at', '=', $request->chooseDay)->get(); 
-            $product = OrderDetail::join('order','order.id','=','order_id')->whereDate('order.created_at','=',$request->chooseDay)->where('order.status','=','2')->sum('quantity');
+            $prdtd = Order::select('order_detail.quantity', 'order_detail.price', 'order_detail.entry_price')->join('order_detail', 'order_id', '=', 'id')->where('order.status', '=', '2')->whereDate('order.created_at', '=', $request->chooseDay)->get();
+            $product = OrderDetail::join('order', 'order.id', '=', 'order_id')->whereDate('order.created_at', '=', $request->chooseDay)->where('order.status', '=', '2')->sum('quantity');
+            $bill = Order::where('order.status', '=', '2')->whereDate('order.created_at', '=', $request->chooseDay)->get();
         }
+
+        $giaBan = 0;
+        $giaNhap = 0;
+
+        foreach ($bill as $bi) {
+            $giaBan += $bi['total_price'];
+        };
         foreach ($prdtd as $pr) {
-            $profitToday += ($pr['quantity']*$pr['price']) - ($pr['quantity'] * $pr['entry_price']);
-        }
+            // $profitToday += ($pr['quantity'] * $pr['price']) - ($pr['quantity'] * $pr['entry_price']);
+            $giaNhap += $pr['entry_price'];
+        };
+
+        $profitToday = $giaBan - $giaNhap;
         $data = [
             'customer'  => $customer,
             'order'     => Order::count(),
@@ -51,9 +63,24 @@ class AdminController extends Controller
             'revenueToday'   => $revenueToday,
             // 'profitToday'   => $profitToday,
         ];
-        
-        $customer = Order::select(\DB::raw('order.customer_id,COUNT(order.customer_id) as countOrder,customer.name,customer.email,Sum(order.total_price) as sumPrice'))
-            ->join('customer', 'customer.id', '=', 'order.customer_id')->where('order.status', '=', 2)->groupBy('order.customer_id')->orderBy('countOrder', 'DESC')->paginate(10);
+
+        $customer = Customer::orderBy('tich_diem', 'DESC')->paginate(3);
+        if (isset($request->queryTv) && $request->queryTv != null) {
+            if ($request->queryTv == 1) {
+                $customer = Customer::where('tich_diem', '>', '1000000')->where('tich_diem', '<', '2000000')->orderBy('tich_diem', 'DESC')->paginate(4);
+            } elseif ($request->queryTv == 2) {
+                $customer = Customer::where('tich_diem', '>', '2000000')->where('tich_diem', '<', '3000000')->orderBy('tich_diem', 'DESC')->paginate(4);
+            } elseif ($request->queryTv == 3) {
+                $customer = Customer::where('tich_diem', '>', '3000000')->where('tich_diem', '<', '4000000')->orderBy('tich_diem', 'DESC')->paginate(4);
+            } elseif ($request->queryTv == 4) {
+                $customer = Customer::where('tich_diem', '>', '4000000')->orderBy('tich_diem', 'DESC')->paginate(4);
+            } elseif ($request->queryTv == 5) {
+                $customer = Customer::where('tich_diem', '<', '1000000')->orderBy('tich_diem', 'DESC')->paginate(4);
+            }
+        }
+        if (isset($request->text_search_tv) && $request->text_search_tv != null) {
+            $customer = Customer::where('name', 'LIKE', "%{$request->text_search_tv}%")->orderBy('tich_diem', 'DESC')->paginate(3);
+        }
 
         // SELECT `created_at`,month(created_at) as month,day(created_at) as day, sum(total_price) as total_price FROM `order` 
         // WHERE status=2 and month(created_at) = month(now()) GROUP BY day order BY day ASC
@@ -75,10 +102,10 @@ class AdminController extends Controller
 
         $x = cal_days_in_month(CAL_GREGORIAN, Carbon::now()->month, Carbon::now()->year);
 
-        if(isset($request->chooseMonth) && $request->chooseMonth != 0) {
+        if (isset($request->chooseMonth) && $request->chooseMonth != 0) {
             $chartMonth = Order::select(\DB::raw('created_at,month(created_at) as month,day(created_at) as day,sum(total_price) as total_price'))
-            ->WHERE('status', '=', '2')->whereMonth('created_at', '=', $request->chooseMonth)->whereYear('created_at', '=', Carbon::now()->year)
-            ->groupBy('day')->orderBy('day', 'ASC')->get();
+                ->WHERE('status', '=', '2')->whereMonth('created_at', '=', $request->chooseMonth)->whereYear('created_at', '=', Carbon::now()->year)
+                ->groupBy('day')->orderBy('day', 'ASC')->get();
 
             $x = cal_days_in_month(CAL_GREGORIAN, $request->chooseMonth, Carbon::now()->year);
         }
@@ -108,7 +135,7 @@ class AdminController extends Controller
             'labels'    => json_encode($dayOfChartMonth),
             'dataC'     => json_encode($dataChartMonth)
         ];
-        if(isset($request->chooseMonth) && $request->chooseMonth != 0) {
+        if (isset($request->chooseMonth) && $request->chooseMonth != 0) {
             $chartMonth = [
                 'month'     => $request->chooseMonth,
                 'labels'    => json_encode($dayOfChartMonth),
@@ -149,20 +176,20 @@ class AdminController extends Controller
 
             $dayOfChartMonth = [];
             $dataChartMonth = [];
-            
+
             $chartMonth = DB::select("SELECT `created_at`,month(created_at) as month,day(created_at) as day, sum(total_price) as total_price FROM `order` 
             WHERE status=2 and created_at BETWEEN CAST('$request->dayStart' as date) and cast('$request->dayEnd' as date) GROUP BY day order BY day ASC");
             foreach ($chartMonth as $chartM) {
-                $dayOfChartMonth[] = $chartM->day .'/'.$chartM->month;
+                $dayOfChartMonth[] = $chartM->day . '/' . $chartM->month;
                 $dataChartMonth[] = $chartM->total_price;
             }
             $chartMonth = [
-                'month'     => $request->dayStart .' đến '. $request->dayEnd,
+                'month'     => $request->dayStart . ' đến ' . $request->dayEnd,
                 'labels'    => json_encode($dayOfChartMonth),
                 'dataC'     => json_encode($dataChartMonth)
             ];
         }
-        
+
         return view('admin.index', compact('customer', 'data', 'chartMonth', 'chartYear'));
     }
 
@@ -265,9 +292,9 @@ class AdminController extends Controller
         return view('admin.profile');
     }
 
-    public function exportExcel() 
+    public function exportExcel()
     {
-        
+
         // dd($data);
         return Excel::download(new ExportExcel, 'Thống kê.xlsx');
         // return Excel::download(function($excel) {

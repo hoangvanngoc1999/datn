@@ -24,6 +24,7 @@ class Customer extends Authenticatable
         'phone',
         'address',
         'password',
+        'tich_diem',
         'remember_token',
         'status',
         'token'

@@ -13,15 +13,15 @@
         <select name="cat_id" class="form-control">
             <option value="">Chọn danh mục</option>
             @foreach($cats as $cat)
-            <?php $selected = $cat->id == request('cat_id')? 'selected' :'';?>
+            <?php $selected = $cat->id == request('cat_id') ? 'selected' : ''; ?>
             <option value="{{$cat->id}}" {{$selected}}>{{$cat->name}}</option>
             @endforeach
         </select>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <select name="price" class="form-control">
                 <option value="">Sắp xếp</option>
-                <option value="price-ASC">Price +</option>
-                <option value="price-DESC">Price -</option>
+                <option value="price-ASC">Giá từ thấp đến cao</option>
+                <option value="price-DESC">Giá từ cao xuống thấp</option>
             </select>
         </div>
         <div class="form-group">
@@ -30,7 +30,7 @@
                 <option value="name-ASC">A-Z</option>
                 <option value="name-DESC">Z-A</option>
             </select>
-        </div>
+        </div> -->
     </div>
     <button type="submit" class="btn btn-primary">
         <i class="fas fa-search"></i>

@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AjaxLoginController;
+use App\Http\Controllers\promotionControllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +21,13 @@ use App\Http\Controllers\AjaxLoginController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('test-email', [HomeController::class, 'testEmail']);
 Route::get('/', 'HomeController@index')->name('home.index'); //route(home.index)
-Route::get('/language/{lang}',[HomeController::class,'lang'])->name('home.lang');;
+Route::get('/language/{lang}', [HomeController::class, 'lang'])->name('home.lang');;
 Route::get('/shop', 'HomeController@shop')->name('home.shop');
 
-Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', 'Admincontroller@index')->name('admin.index');
     Route::get('order', [OrderController::class, 'history'])->name('order.index');
     Route::get('order/detail/{order}', [OrderController::class, 'detail'])->name('order.detail');
@@ -33,23 +35,28 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function(){
     Route::put('order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::get('/changepassword', 'Usercontroller@changepasswordform')->name('user.changepassword');
     Route::post('/changepassword', 'Usercontroller@changepassword')->name('user.changepassword');
-    Route::get('/exportExcel',[Admincontroller::class,'exportExcel'])->name('admin.exportExcel');
+    Route::get('/exportExcel', [Admincontroller::class, 'exportExcel'])->name('admin.exportExcel');
 
     Route::resources([
-        'category'=>'CategoryController',
-        'product'=>'ProductController',
-        'guest'=>'GuestController',
-        'order'=>'OrderController',
+        'category' => 'CategoryController',
+        'product' => 'ProductController',
+        'guest' => 'GuestController',
+        'order' => 'OrderController',
+    ]);
+    Route::get('/promotion', [promotionControllers::class, 'index'])->name('admin.promotion')->middleware('only.role');
+    Route::get('/create-promotion', [promotionControllers::class, 'create_promotion'])->name('admin.create-promotion')->middleware('only.role');
+    Route::post('/create-promotion', [promotionControllers::class, 'store'])->name('admin.create-store-promotion')->middleware('only.role');
+    Route::get('/edit/promotion/{id}', [promotionControllers::class, 'edit'])->name('admin.edit-store-promotion')->middleware('only.role');
+    Route::post('/edit/promotion', [promotionControllers::class, 'storeEdit'])->name('admin.edit-route-promotion')->middleware('only.role');
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'only.role']], function () {
+    Route::resources([
+        'user' => 'UserController',
     ]);
 });
 
-Route::group(['prefix'=> 'admin', 'middleware'=>['auth', 'only.role']], function(){
-    Route::resources([
-        'user'=> 'UserController',
-    ]);
-});
-
-Route::group(['prefix' => 'cart'], function (){
+Route::group(['prefix' => 'cart'], function () {
     Route::get('add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::get('update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::get('delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
@@ -57,7 +64,7 @@ Route::group(['prefix' => 'cart'], function (){
     Route::get('view', [CartController::class, 'view'])->name('cart.view');
 });
 
-Route::group(['prefix' => 'customer'], function (){
+Route::group(['prefix' => 'customer'], function () {
     Route::get('register', [CustomerHomeController::class, 'register'])->name('customer.register');
     Route::get('login', [CustomerHomeController::class, 'login'])->name('customer.login');
     Route::get('logout', [CustomerHomeController::class, 'logout'])->name('customer.logout');
@@ -81,7 +88,7 @@ Route::group(['prefix' => 'customer'], function (){
     Route::post('/rating', [CustomerHomeController::class, 'rating'])->name('customer.rating');
 });
 
-Route::group(['prefix' => 'order','middleware' => 'customer'], function (){
+Route::group(['prefix' => 'order', 'middleware' => 'customer'], function () {
     Route::get('checkout', [OrderHomeController::class, 'checkout'])->name('order.checkout');
     Route::get('success', [OrderHomeController::class, 'success'])->name('order.success');
     Route::get('order_success', [OrderHomeController::class, 'order_success'])->name('order.order_success');
@@ -102,10 +109,10 @@ Route::post('/admin/profile', [Usercontroller::class, 'update_avatar'])->name('a
 Route::get('/category/{id}', [HomeController::class, 'category'])->name('category');
 Route::get('/{slug}', [HomeController::class, 'product_detail'])->name('product_detail');
 
-Route::group(['prefix' => 'ajax'], function (){
+Route::group(['prefix' => 'ajax'], function () {
     Route::post('/login', [AjaxLoginController::class, 'login'])->name('ajax.login');
     Route::post('/comment/{product_id}', [AjaxLoginController::class, 'comment'])->name('ajax.comment');
 });
-Route::get('/admin/403', function(){
+Route::get('/admin/403', function () {
     return view('admin/403');
 })->name('admin.403');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 28, 2022 lúc 04:14 AM
+-- Thời gian đã tạo: Th7 31, 2022 lúc 05:46 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -95,6 +95,7 @@ CREATE TABLE `customer` (
   `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `tich_diem` int(11) DEFAULT 0,
   `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0,
@@ -108,12 +109,12 @@ CREATE TABLE `customer` (
 -- Đang đổ dữ liệu cho bảng `customer`
 --
 
-INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `password`, `status`, `token`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'Hoàng Văn Ngọc', 'demo@gmail.com', '0147852369', 'Hà Nội', '$2y$10$uGtw8fd5kLkJ7CTEd5R1MuI78s9zWbV81M8hNTz72eJExmwi5ct9.', 0, NULL, 'oLQFGbICI45bfPkcfzNA40X8fWVfE7aTeIqVZRXF3vWXqF8JBlQiR3Zptwpo', '2022-05-24 00:42:43', '2022-05-29'),
-(14, 'Hoàng Văn Ngọc', 'demotest@gmail.com', '0989135216', 'Hà Nội', '$2y$10$Ydc7Td6y7wGxbgwBwdGWduPzuRAE44W3ypfzotLkRSEpbb.b6NrAO', 1, NULL, NULL, '2022-05-29 08:40:32', '2022-05-30'),
-(15, 'Hoàng Văn Ngọc', 'hoangvanngoc1999@gmail.com', '0696987528', 'Hà Nội', '$2y$10$d0qoMYwiCoLyZuAhVYHbLuzzMuIfzT8p3TT1WzFMpHiFxMdIZKv.6', 1, '8PFFEN2V4RC3AFLLAEMM', NULL, '2022-05-29 21:56:00', '2022-05-30'),
-(16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '', '', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', 1, NULL, NULL, '2022-07-15 15:23:29', NULL),
-(17, 'Nguyễn nhiều', 'nhieunxps16310@fpt.edu.vn', '088803208', '21984', '$2y$10$n3l/WTEz8vqUq0ztQzKKVe4Y4vmAp5T3nmDE64DgcjA3psIenLpWe', 1, 'FHB8UH5B8WXZPWGLFMAO', NULL, '2022-07-27 18:29:27', '2022-07-28');
+INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `tich_diem`, `address`, `password`, `status`, `token`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, 'Hoàng Văn Ngọc', 'demo@gmail.com', '0147852369', 0, 'Hà Nội', '$2y$10$uGtw8fd5kLkJ7CTEd5R1MuI78s9zWbV81M8hNTz72eJExmwi5ct9.', 0, NULL, 'oLQFGbICI45bfPkcfzNA40X8fWVfE7aTeIqVZRXF3vWXqF8JBlQiR3Zptwpo', '2022-05-24 00:42:43', '2022-05-29'),
+(14, 'Hoàng Văn Ngọc', 'demotest@gmail.com', '0989135216', 0, 'Hà Nội', '$2y$10$Ydc7Td6y7wGxbgwBwdGWduPzuRAE44W3ypfzotLkRSEpbb.b6NrAO', 1, NULL, NULL, '2022-05-29 08:40:32', '2022-05-30'),
+(15, 'Hoàng Văn Ngọc', 'hoangvanngoc1999@gmail.com', '0696987528', 0, 'Hà Nội', '$2y$10$d0qoMYwiCoLyZuAhVYHbLuzzMuIfzT8p3TT1WzFMpHiFxMdIZKv.6', 1, '8PFFEN2V4RC3AFLLAEMM', NULL, '2022-05-29 21:56:00', '2022-05-30'),
+(16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '', 2700000, '', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', 1, NULL, NULL, '2022-07-15 15:23:29', '2022-07-30'),
+(17, 'Nguyễn nhiều', 'nhieunxps16310@fpt.edu.vn', '088803208', 0, '21984', '$2y$10$n3l/WTEz8vqUq0ztQzKKVe4Y4vmAp5T3nmDE64DgcjA3psIenLpWe', 1, 'FHB8UH5B8WXZPWGLFMAO', NULL, '2022-07-27 18:29:27', '2022-07-28');
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,12 @@ INSERT INTO `order` (`id`, `customer_id`, `name`, `email`, `phone`, `total_price
 (38, 15, 'Hoàng Văn Ngọc', 'hoangvanngoc1999@gmail.com', '0696987528', 1250000, 'Hà Nội', '2022-07-22 02:35:26', '2022-07-22 09:35:38', NULL, 1, 'BggnG6Z1JjGFC2WemQT8'),
 (39, 16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '123', 1500000, '1412', '2022-07-27 17:35:38', '2022-07-28 01:01:43', '43', 3, 'kePJxc8unOiuCNXkJy6C'),
 (40, 16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '43242', 1000000, '5235', '2022-07-27 18:00:55', '2022-07-28 01:10:18', '3412', 5, 'zc8JZguz44FixDGiRXlP'),
-(41, 17, 'Nguyễn nhiều', 'nhieunxps16310@fpt.edu.vn', '088803208', 950000, '21984', '2022-07-27 18:30:08', '2022-07-28 02:12:31', '123', 2, 'ssCqMnK9vle2qAxKpqmV');
+(41, 17, 'Nguyễn nhiều', 'nhieunxps16310@fpt.edu.vn', '088803208', 950000, '21984', '2022-07-27 18:30:08', '2022-07-28 02:12:31', '123', 2, 'ssCqMnK9vle2qAxKpqmV'),
+(42, 17, 'Nguyễn nhiều', 'nhieunxps16310@fpt.edu.vn', '088803208', 1000000, '21984', '2022-07-28 02:05:46', '2022-07-28 09:05:46', 'ok', 0, 'XcKTGiLwgbll84EJMi6q'),
+(43, 17, 'Nguyễn nhiều', 'nhieunxps16310@fpt.edu.vn', '088803208', 750000, '21984', '2022-07-28 02:08:01', '2022-07-28 09:09:58', '123', 1, 'XaU5XO1cgMkmlnsiFQOk'),
+(44, 16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '12424', 970000, '124124', '2022-07-30 16:30:15', '2022-07-30 23:47:50', '1234', 2, 'xFfzhiMUj8G4gjJsWwaC'),
+(45, 16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '31242512512', 170000, '4215125', '2022-07-30 16:34:06', '2022-07-30 23:49:37', '4124', 2, 'BtcBWWlwjK8PlNdKcvpr'),
+(46, 16, 'nguyennhieu1507', 'nguyennhieu@gmail.com', '0829384432', 892400, '41241', '2022-07-30 19:03:05', '2022-07-31 02:08:23', '213', 4, 'PfXRso7PWMUkTPkwV6gW');
 
 -- --------------------------------------------------------
 
@@ -198,6 +204,7 @@ CREATE TABLE `order_detail` (
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` float NOT NULL,
+  `entry_price` int(11) NOT NULL DEFAULT 0,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -206,50 +213,55 @@ CREATE TABLE `order_detail` (
 -- Đang đổ dữ liệu cho bảng `order_detail`
 --
 
-INSERT INTO `order_detail` (`order_id`, `product_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 4, 3, 150000, '2022-05-24', '2022-05-24'),
-(1, 6, 2, 200000, '2022-05-24', '2022-05-24'),
-(2, 6, 3, 200000, '2022-05-29', '2022-05-29'),
-(2, 8, 2, 450000, '2022-05-29', '2022-05-29'),
-(3, 4, 1, 150000, '2022-05-29', '2022-05-29'),
-(4, 6, 1, 200000, '2022-05-29', '2022-05-29'),
-(4, 8, 1, 450000, '2022-05-29', '2022-05-29'),
-(5, 6, 1, 200000, '2022-05-29', '2022-05-29'),
-(5, 8, 1, 450000, '2022-05-29', '2022-05-29'),
-(6, 4, 2, 150000, '2022-05-29', '2022-05-29'),
-(7, 4, 1, 150000, '2022-05-29', '2022-05-29'),
-(8, 6, 2, 200000, '2022-05-29', '2022-05-29'),
-(9, 6, 2, 200000, '2022-05-29', '2022-05-29'),
-(10, 4, 1, 150000, '2022-05-29', '2022-05-29'),
-(11, 6, 1, 200000, '2022-05-29', '2022-05-29'),
-(12, 6, 1, 200000, '2022-05-29', '2022-05-29'),
-(13, 8, 1, 450000, '2022-05-29', '2022-05-29'),
-(14, 8, 3, 450000, '2022-05-30', '2022-05-30'),
-(15, 6, 3, 200000, '2022-05-30', '2022-05-30'),
-(16, 8, 1, 450000, '2022-06-23', '2022-06-23'),
-(17, 8, 1, 450000, '2022-06-23', '2022-06-23'),
-(26, 8, 3, 450000, '2022-07-15', '2022-07-15'),
-(27, 6, 5, 200000, '2022-07-16', '2022-07-16'),
-(27, 8, 1, 450000, '2022-07-16', '2022-07-16'),
-(28, 6, 6, 200000, '2022-07-16', '2022-07-16'),
-(29, 6, 1, 200000, '2022-07-16', '2022-07-16'),
-(30, 6, 6, 200000, '2022-07-16', '2022-07-16'),
-(31, 6, 5, 200000, '2022-07-16', '2022-07-16'),
-(32, 6, 1, 200000, '2022-07-16', '2022-07-16'),
-(33, 6, 1, 200000, '2022-07-17', '2022-07-17'),
-(33, 10, 5, 50000, '2022-07-17', '2022-07-17'),
-(34, 6, 5, 200000, '2022-07-17', '2022-07-17'),
-(35, 6, 4, 200000, '2022-07-19', '2022-07-19'),
-(36, 9, 2, 350000, '2022-07-19', '2022-07-19'),
-(36, 10, 2, 50000, '2022-07-19', '2022-07-19'),
-(37, 9, 2, 350000, '2022-07-19', '2022-07-19'),
-(37, 10, 3, 50000, '2022-07-19', '2022-07-19'),
-(38, 9, 3, 350000, '2022-07-22', '2022-07-22'),
-(38, 10, 4, 50000, '2022-07-22', '2022-07-22'),
-(39, 20, 3, 500000, '2022-07-28', '2022-07-28'),
-(40, 21, 5, 200000, '2022-07-28', '2022-07-28'),
-(41, 8, 1, 450000, '2022-07-28', '2022-07-28'),
-(41, 20, 1, 500000, '2022-07-28', '2022-07-28');
+INSERT INTO `order_detail` (`order_id`, `product_id`, `quantity`, `price`, `entry_price`, `created_at`, `updated_at`) VALUES
+(1, 4, 3, 150000, 0, '2022-05-24', '2022-05-24'),
+(1, 6, 2, 200000, 0, '2022-05-24', '2022-05-24'),
+(2, 6, 3, 200000, 0, '2022-05-29', '2022-05-29'),
+(2, 8, 2, 450000, 0, '2022-05-29', '2022-05-29'),
+(3, 4, 1, 150000, 0, '2022-05-29', '2022-05-29'),
+(4, 6, 1, 200000, 0, '2022-05-29', '2022-05-29'),
+(4, 8, 1, 450000, 0, '2022-05-29', '2022-05-29'),
+(5, 6, 1, 200000, 0, '2022-05-29', '2022-05-29'),
+(5, 8, 1, 450000, 0, '2022-05-29', '2022-05-29'),
+(6, 4, 2, 150000, 0, '2022-05-29', '2022-05-29'),
+(7, 4, 1, 150000, 0, '2022-05-29', '2022-05-29'),
+(8, 6, 2, 200000, 0, '2022-05-29', '2022-05-29'),
+(9, 6, 2, 200000, 0, '2022-05-29', '2022-05-29'),
+(10, 4, 1, 150000, 0, '2022-05-29', '2022-05-29'),
+(11, 6, 1, 200000, 0, '2022-05-29', '2022-05-29'),
+(12, 6, 1, 200000, 0, '2022-05-29', '2022-05-29'),
+(13, 8, 1, 450000, 0, '2022-05-29', '2022-05-29'),
+(14, 8, 3, 450000, 0, '2022-05-30', '2022-05-30'),
+(15, 6, 3, 200000, 0, '2022-05-30', '2022-05-30'),
+(16, 8, 1, 450000, 0, '2022-06-23', '2022-06-23'),
+(17, 8, 1, 450000, 0, '2022-06-23', '2022-06-23'),
+(26, 8, 3, 450000, 0, '2022-07-15', '2022-07-15'),
+(27, 6, 5, 200000, 0, '2022-07-16', '2022-07-16'),
+(27, 8, 1, 450000, 0, '2022-07-16', '2022-07-16'),
+(28, 6, 6, 200000, 0, '2022-07-16', '2022-07-16'),
+(29, 6, 1, 200000, 0, '2022-07-16', '2022-07-16'),
+(30, 6, 6, 200000, 0, '2022-07-16', '2022-07-16'),
+(31, 6, 5, 200000, 0, '2022-07-16', '2022-07-16'),
+(32, 6, 1, 200000, 0, '2022-07-16', '2022-07-16'),
+(33, 6, 1, 200000, 0, '2022-07-17', '2022-07-17'),
+(33, 10, 5, 50000, 0, '2022-07-17', '2022-07-17'),
+(34, 6, 5, 200000, 0, '2022-07-17', '2022-07-17'),
+(35, 6, 4, 200000, 0, '2022-07-19', '2022-07-19'),
+(36, 9, 2, 350000, 0, '2022-07-19', '2022-07-19'),
+(36, 10, 2, 50000, 0, '2022-07-19', '2022-07-19'),
+(37, 9, 2, 350000, 0, '2022-07-19', '2022-07-19'),
+(37, 10, 3, 50000, 0, '2022-07-19', '2022-07-19'),
+(38, 9, 3, 350000, 0, '2022-07-22', '2022-07-22'),
+(38, 10, 4, 50000, 0, '2022-07-22', '2022-07-22'),
+(39, 20, 3, 500000, 0, '2022-07-28', '2022-07-28'),
+(40, 21, 5, 200000, 0, '2022-07-28', '2022-07-28'),
+(41, 8, 1, 450000, 0, '2022-07-28', '2022-07-28'),
+(41, 20, 1, 500000, 0, '2022-07-28', '2022-07-28'),
+(43, 6, 3, 250000, 0, '2022-07-28', '2022-07-28'),
+(44, 6, 4, 250000, 0, '2022-07-30', '2022-07-30'),
+(45, 21, 1, 200000, 0, '2022-07-30', '2022-07-30'),
+(46, 8, 1, 450000, 0, '2022-07-31', '2022-07-31'),
+(46, 20, 1, 500000, 0, '2022-07-31', '2022-07-31');
 
 -- --------------------------------------------------------
 
@@ -278,13 +290,41 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `name`, `slug`, `image`, `price`, `sale_price`, `entry_price`, `category_id`, `status`, `qty`, `created_at`, `updated_at`) VALUES
 (4, 'Áo phông nam có cổ', 'ao-phong-nam-co-co', '1652405183.jpg', 200000, 150000, 0, 10, 1, '0', '2022-04-22', '2022-07-27'),
-(6, 'Váy đầm', 'vay-dam', '1652407273.jpg', 250000, 0, 0, 1, 1, '35', '2022-05-13', '2022-07-27'),
-(8, 'Váy đẹp', 'vay-dep', '1653815099.jpg', 500000, 450000, 0, 1, 1, '41', '2022-05-29', '2022-07-28'),
+(6, 'Váy đầm', 'vay-dam', '1652407273.jpg', 250000, 0, 0, 1, 1, '28', '2022-05-13', '2022-07-30'),
+(8, 'Váy đẹp', 'vay-dep', '1653815099.jpg', 500000, 450000, 0, 1, 1, '40', '2022-05-29', '2022-07-31'),
 (9, 'Áo polo', 'ao-polo', '1657635772.jpg', 450000, 400000, 0, 6, 1, '54', '2022-07-12', '2022-07-27'),
 (10, 'Váy thời trang', 'vay-thoi-trang', '1657635821.jpg', 550000, 50000, 0, 2, 1, '56', '2022-07-12', '2022-07-22'),
 (18, 'Đầm trung niên cho mẹ sang trọng', 'dam-trung-nien-cho-me-sang-trong', '1658551908.jpg', 400000, 350000, 0, 1, 1, '50', '2022-07-23', '2022-07-23'),
-(20, 'Váy đầm body', 'vay-dam-body', '1658552150.jpg', 550000, 500000, 0, 2, 1, '46', '2022-07-23', '2022-07-28'),
-(21, 'Áo phông nữ', 'ao-phong-nu', '1658552215.jpg', 240000, 200000, 0, 6, 1, '45', '2022-07-23', '2022-07-28');
+(20, 'Váy đầm body', 'vay-dam-body', '1658552150.jpg', 550000, 500000, 0, 2, 1, '45', '2022-07-23', '2022-07-31'),
+(21, 'Áo phông nữ', 'ao-phong-nu', '1658552215.jpg', 240000, 200000, 0, 6, 1, '43', '2022-07-23', '2022-07-30');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `promotion`
+--
+
+CREATE TABLE `promotion` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `time_start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `time_end` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `create_by` int(11) NOT NULL,
+  `type` enum('%','$') NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `detail` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `promotion`
+--
+
+INSERT INTO `promotion` (`id`, `name`, `time_start`, `time_end`, `create_by`, `type`, `status`, `detail`, `created_at`, `updated_at`) VALUES
+(3, 'Mã km này ok', '2022-07-31 00:14:12', '2022-08-02 01:29:55', 9, '$', 0, 30000, '2022-07-30 16:23:45', '2022-07-30 16:23:45'),
+(4, 'Khuyến mại hè', '2022-07-30 19:59:00', '2022-07-31 04:53:00', 9, '%', 0, 10, '2022-07-30 18:49:57', '2022-07-30 18:49:57'),
+(5, 'Nguyễn Nhiều', '2022-07-30 03:25:00', '2022-08-03 03:25:00', 9, '%', 0, 12, '2022-07-30 20:28:37', '2022-07-30 20:28:37');
 
 -- --------------------------------------------------------
 
@@ -304,6 +344,7 @@ CREATE TABLE `ratings` (
 
 INSERT INTO `ratings` (`rating_start`, `product_id`, `customer_id`) VALUES
 (2.6, 4, 15),
+(4.5, 4, 17),
 (4.7, 6, 16),
 (4.5, 8, 14),
 (3.5, 8, 15),
@@ -337,7 +378,10 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `rol
 (1, 'Admin', 'admin@gmail.com', '$2y$10$CbCce7MZXYKr3MAQtMVYfu1C65T8A9sNCq3EJLMY6xOv75zNwDIgi', '', '', '0', NULL, '2022-05-25'),
 (2, 'Demoadmin', 'demoadmin@gmail.com', '$2y$10$CbCce7MZXYKr3MAQtMVYfu1C65T8A9sNCq3EJLMY6xOv75zNwDIgi', '', '', '1', NULL, '2022-05-25'),
 (3, 'nguyennhieu', 'nguyennhieu@gmail.com', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', '', '', '0', NULL, NULL),
-(4, 'nguyennhieu', 'bossnhieu@gmail.com', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', '', '', '1', NULL, NULL);
+(4, 'nguyennhieu', 'bossnhieu@gmail.com', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', '', '', '1', NULL, NULL),
+(9, 'Nguyễn Xuân Nhiều', 'nhieunxps16310@fpt.edu.vmm', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', '0888800032', '3928', '0', '2022-07-28', '2022-07-28'),
+(10, '1243', '41242g@gmail.com', '$2y$10$1yLaZz5MfbcPtWF0WETmuOir1A9h7tKx4Ed/re9GKMiDBjUAYR0/6', '4124', '412', '1', '2022-07-28', '2022-07-28'),
+(11, 'Test', 'baotest@gmail.com', '$2y$10$bTp/ZEZNZeS8Da8P1KlVgOI/3wFJzdPZQpSfrtauP1cp.Fgz4MT9W', '12345', '123', '1', '2022-07-28', '2022-07-28');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -393,6 +437,12 @@ ALTER TABLE `product`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Chỉ mục cho bảng `promotion`
+--
+ALTER TABLE `promotion`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `ratings`
 --
 ALTER TABLE `ratings`
@@ -426,7 +476,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -438,7 +488,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
@@ -447,10 +497,16 @@ ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT cho bảng `promotion`
+--
+ALTER TABLE `promotion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

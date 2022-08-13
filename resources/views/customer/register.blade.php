@@ -1,17 +1,22 @@
 @extends('layout.fe')
 @section('title', 'title')
-<?php $lang = Session::get('lang'); if(!isset($lang) || $lang == 'vi') {$lang = config('langVi');} else {$lang = config('langEn');} ?>
+<?php $lang = Session::get('lang');
+if (!isset($lang) || $lang == 'vi') {
+    $lang = config('langVi');
+} else {
+    $lang = config('langEn');
+} ?>
 @section('main')
 <div class="container">
     <div class="col-md-6">
         <form action="" method="POST" class="form-horizontal">
             @csrf
             <div class="form-group">
-                <legend>Form register</legend>
+                <legend>Đăng ký</legend>
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="" class="control-label">Name</label>
+                    <label for="" class="control-label">Họ và tên</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="name" placeholder="Input Name">
@@ -29,7 +34,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="" class="control-label">Phone</label>
+                    <label for="" class="control-label">Số điện thoại</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="number" class="form-control" name="phone" placeholder="Input Phone">
@@ -38,7 +43,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="" class="control-label">Address</label>
+                    <label for="" class="control-label">Địa chỉ</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="address" placeholder="Input Address">
@@ -47,7 +52,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="" class="control-label">Password</label>
+                    <label for="" class="control-label">Mật khẩu</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" name="password" placeholder="Input Address">
@@ -56,7 +61,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="" class="control-label">Confirm Password</label>
+                    <label for="" class="control-label">Nhập lại mật khẩu</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" name="confirm_password" placeholder="Input Address">
@@ -65,7 +70,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-10 col-sm-offset-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Đăng ký</button>
                 </div>
             </div>
         </form>
