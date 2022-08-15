@@ -157,10 +157,10 @@ if (!isset($lang) || $lang == 'vi') {
                     </div> -->
                     <div class="form-group">
                         <label for="">Chọn giá từ</label>
-                        <input style="max-width: 75px;" type="number" class="form-control" name='for-price'
+                        <input style="max-width: 120px;" type="number" class="form-control" name='for-price'
                             value="{{request('for-price')}}" placeholder="Nhập giá tiền">
                         <label for="">Đến</label>
-                        <input style="max-width: 75px;" type="number" class="form-control" name='to-price'
+                        <input style="max-width: 120px;" type="number" class="form-control" name='to-price'
                             value="{{request('to-price')}}" placeholder="Nhập giá tiền">
                     </div>
                     <button type="submit" class="btn btn-primary">
@@ -196,7 +196,7 @@ if (!isset($lang) || $lang == 'vi') {
                     @endforeach
 
                 </div>
-                {{$products}}
+                {{$products->appends(request()->all())->links()}}
                 <!--features_items-->
                 <!--new_items-->
                 <div class="recommended_items">

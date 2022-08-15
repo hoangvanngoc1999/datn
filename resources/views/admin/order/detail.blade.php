@@ -128,9 +128,9 @@
             <tr>
                 <th>ID</th>
                 <th>Tên sản phẩm</th>
-                <th>Số lượng kho</th>
+                <th>Số lượng có thể bán</th>
                 <th>Hình ảnh</th>
-                <th>Số lượng</th>
+                <th>Số lượng hàng đặt</th>
                 <th>Giá</th>
                 <th>TT</th>
             </tr>

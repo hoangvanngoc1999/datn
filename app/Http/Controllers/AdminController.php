@@ -30,7 +30,11 @@ class AdminController extends Controller
         $product = OrderDetail::join('order', 'order.id', '=', 'order_id')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->where('order.status', '=', '2')->sum('quantity');
         $prdtd = Order::select('order_detail.quantity', 'order_detail.price', 'order_detail.entry_price')->join('order_detail', 'order_id', '=', 'id')->where('order.status', '=', '2')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->get();
         $bill = Order::where('order.status', '=', '2')->whereDate('order.created_at', '=', Carbon::today()->toDateString())->get();
-
+        $dataproduct1 = OrderDetail::select(\DB::raw('product_id,product.name,order_detail.price,sum(order_detail.entry_price) as entry_price,sum(order_detail.quantity) as soluong, month(order_detail.created_at) as MonthC,year(order_detail.created_at) as YearC'))
+            ->join('product', 'id', 'product_id')
+            ->join('order', 'order.id', 'order_detail.order_id')->where('order.status', '=', '2')
+            ->groupBy('product_id', 'MonthC', 'YearC')->orderBy('MonthC')->orderBy('YearC')->get();
+        // dd($dataproduct1);
         if (isset($request->chooseDay)) {
             $customer = Order::whereDate('created_at', '=', $request->chooseDay)->groupBy('order.customer_id')->get()->count();
             $orderToday = Order::whereDate('created_at', '=', $request->chooseDay)->count();
@@ -190,7 +194,18 @@ class AdminController extends Controller
             ];
         }
 
-        return view('admin.index', compact('customer', 'data', 'chartMonth', 'chartYear'));
+        $cate = 0;
+        $dtcate = OrderDetail::Select('order_detail.product_id', 'order_detail.price', 'order_detail.quantity')
+            ->join('product', 'product.id', '=', 'order_detail.product_id')
+            ->join('order', 'order.id', '=', 'order_detail.order_id')
+            ->where('order.status', '=', 2)
+            ->where('product.category_id', '=', 1)->get();
+        // dd($dtcate);
+        foreach ($dtcate as $dtc) {
+            $cate += $dtc['price'] * $dtc['quantity'];
+        }
+        // dd($cate);
+        return view('admin.index', compact('cate', 'customer', 'data', 'chartMonth', 'chartYear'));
     }
 
     /**

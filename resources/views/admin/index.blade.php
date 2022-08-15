@@ -87,6 +87,16 @@ small {
 <div class="container bootstrap snippets bootdey" style="max-width:100%">
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-primary panel-colorful">
+                <div class="panel-body text-center">
+                    <p class="text-uppercase mar-btm text-sm">Tổng số tiền bán được của danh mục áo sơ mi nữ</p>
+                    <i class="fa fa-cart-plus fa-5x"></i>
+                    <hr>
+                    <p class="h2 text-thin"><?= number_format($cate) ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <a href="{{route('order.index')}}">
                 <div class="panel panel-primary panel-colorful">
                     <div class="panel-body text-center">

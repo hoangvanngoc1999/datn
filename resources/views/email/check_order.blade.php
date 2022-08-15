@@ -56,7 +56,6 @@
             <tr>
                 <th>ID</th>
                 <th>Tên sản phẩm</th>
-                <th>Hình ảnh</th>
                 <th>Số lượng</th>
                 <th>Giá</th>
                 <th>TT</th>
@@ -67,9 +66,6 @@
             <tr>
                 <td>{{$item->product_id}}</td>
                 <td>{{$item->prod->name}}</td>
-                <td>
-                    <img src="{{url('public/uploads')}}/{{$item->prod->image}}" alt="" width="120">
-                </td>
                 <td>{{$item->quantity}}</td>
                 <td>{{$item->price}}</td>
                 <td>{{$item->quantity * $item->price}}</td>

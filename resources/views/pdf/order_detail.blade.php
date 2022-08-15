@@ -90,7 +90,7 @@
             <tr>
                 <td>{{$order->id}}</td>
                 <td>{{$order->created_at->format('d-m-Y')}}</td>
-                <td>{{number_format($order->getTotal())}}</td>
+                <td>{{number_format($order->total_price)}}</td>
                 <td>
                     @if($order->status == 0)
                     <span class="label label-danger">Chưa xác nhận</span>
@@ -98,8 +98,12 @@
                     <span class="label label-primary">Đã xác nhận</span>
                     @elseif($order->status == 2)
                     <span class="label label-warning">Đã giao hàng/Thanh toán</span>
-                    @else($order->status == 3)
+                    @elseif($order->status == 3)
                     <span class="label label-success">Đã hủy</span>
+                    @elseif($order->status == 4)
+                    <span class="label label-info">Đang giao hàng</span>
+                    @else($order->status == 5)
+                    <span class="label label-warning">Đổi hàng</span>
                     @endif
                 </td>
             </tr>
@@ -111,7 +115,6 @@
             <tr>
                 <th>ID</th>
                 <th>Tên sản phẩm</th>
-                <th>Hình ảnh</th>
                 <th>Số lượng</th>
                 <th>Giá</th>
                 <th>TT</th>
@@ -122,9 +125,6 @@
             <tr>
                 <td>{{$item->product_id}}</td>
                 <td>{{$item->prod->name}}</td>
-                <td>
-                    <img src="{{url('public/uploads')}}/{{$item->prod->image}}" alt="" width="120">
-                </td>
                 <td>{{$item->quantity}}</td>
                 <td>{{$item->price}}</td>
                 <td>{{$item->quantity * $item->price}}</td>
